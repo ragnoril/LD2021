@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum GameModes
+{
+    Dig = 0,
+    Build,
+    TotalCount
+};
+
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
@@ -37,9 +45,12 @@ public class GameManager : MonoBehaviour
     public LevelManager Level;
     public UIManager UI;
 
+    public GameModes GameMode;
+
     // Start is called before the first frame update
     void Start()
     {
+        GameMode = GameModes.Dig;
         Level.GenerateLevel();
     }
 

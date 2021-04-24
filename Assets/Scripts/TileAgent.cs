@@ -25,7 +25,8 @@ public class TileAgent : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        SelectionObject.SetActive(true);
+        if (GameManager.instance.GameMode == GameModes.Dig)
+            SelectionObject.SetActive(true);
     }
 
     private void OnMouseExit()
