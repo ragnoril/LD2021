@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     }
 
     public LevelManager Level;
+    public UIManager UI;
 
     // Start is called before the first frame update
     void Start()

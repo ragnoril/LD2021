@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
 
     void GetUserInput(float dt)
     {
-        var translation = Vector3.zero;
+        Vector3 translation = Vector3.zero;
 
         if (Input.mousePosition.x >= Screen.width - ScreenDelta)
         {
@@ -57,6 +57,7 @@ public class CameraController : MonoBehaviour
             translation += transform.forward * zoomDelta;
         }
         transform.position += translation;
+
         translation = transform.position;
 
         translation.x = Mathf.Clamp(translation.x, MinimumX, MaximumX);
@@ -64,5 +65,6 @@ public class CameraController : MonoBehaviour
         translation.z = Mathf.Clamp(translation.z, MinimumZ, MaximumZ);
 
         transform.position = translation;
+
     }
 }
