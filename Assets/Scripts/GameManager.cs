@@ -42,10 +42,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public MusicManager MusicPlayer;
     public LevelManager Level;
     public UIManager UI;
+    public TaskManager Tasks;
 
     public GameModes GameMode;
+
+    public TileAgent SelectedTile;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +61,15 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (GameMode == GameModes.Dig)
+            {
+                if (SelectedTile.CheckIfAvailable())
+                {
+                    Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, 0);
+                }
+            }
+        }
     }
 }
