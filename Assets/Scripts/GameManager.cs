@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
         List<Vector3> path = new List<Vector3>();
 
         int lastPath = PathFinder.finalPath.Count - 1;
-        for (int i = 0; i < PathFinder.finalPath.Count - 1; i++)
+        for (int i = 0; i < PathFinder.finalPath.Count; i++)
         {
             Node node = PathFinder.finalPath[PathFinder.finalPath.Count - i - 1];
             path.Add(new Vector3(node.x, -node.y, 0f));
