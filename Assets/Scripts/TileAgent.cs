@@ -60,13 +60,13 @@ public class TileAgent : MonoBehaviour
         Debug.Log("north " + hitInfo.collider.ToString());
         */
 
-        if (!Physics.Raycast(new Ray(new Vector3(X - 1, Y, -1f), new Vector3(0, 0, 3f))))
+        if (!Physics.Raycast(new Ray(new Vector3(X - 1, -Y, -1f), new Vector3(0, 0, 3f))))
         {
             Debug.Log("west of it empty");
             return true;
         }
 
-        if (!Physics.Raycast(new Ray(new Vector3(X + 1, Y, -1f), new Vector3(0, 0, 3f))))
+        if (!Physics.Raycast(new Ray(new Vector3(X + 1, -Y, -1f), new Vector3(0, 0, 3f))))
         {
             Debug.Log("east of it empty");
             return true;

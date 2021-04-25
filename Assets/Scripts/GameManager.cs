@@ -69,8 +69,16 @@ public class GameManager : MonoBehaviour
                 {
                     if (SelectedTile.CheckIfAvailable())
                     {
-                        Debug.Log("new dig task added.");
-                        Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, 0);
+                        int taskId = Tasks.CheckTaskListForDuplicate(SelectedTile.X, SelectedTile.Y, 0, 0);
+                        if (taskId == -1)
+                        {
+                            Debug.Log("new dig task added.");
+                            Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, 0);
+                        }
+                        else
+                        {
+                            Tasks.RemoveTask(taskId);
+                        }
                     }
                 }
             }

@@ -43,3 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f8eb297b2bc1f643acef73d1c136e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TaskIconPrefab: {fileID: 1148915860237688863, guid: 16fb95747eb7f3043b4daa2463113d6b, type: 3}
