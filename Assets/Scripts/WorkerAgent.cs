@@ -47,4 +47,12 @@ public class WorkerAgent : MonoBehaviour
 
     }
 
+    void GetPathToTask()
+    {
+        // worker'in coordinatlar
+        // task coords
+        // return path
+        // ignore last coord
+        //GameManager.instance.StartPathFinding(, Y, 0, 0);
+    }
 }

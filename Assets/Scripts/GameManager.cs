@@ -47,15 +47,21 @@ public class GameManager : MonoBehaviour
     public UIManager UI;
     public TaskManager Tasks;
 
-    public GameModes GameMode;
+    public GameObject WorkerPrefab;
 
+    public GameModes GameMode;
     public TileAgent SelectedTile;
+
+    public AStar PathFinder;
 
     // Start is called before the first frame update
     void Start()
     {
         GameMode = GameModes.Dig;
         Level.GenerateLevel();
+        PathFinder = new AStar();
+        PathFinder.isDiagonalMovementAllowed = false;
+        PathFinder.isNodeCostEnabled = false;
     }
 
     // Update is called once per frame
@@ -98,5 +104,61 @@ public class GameManager : MonoBehaviour
     void BuildAction()
     {
 
+    }
+
+    List<int> GenerateTileMap(int gX, int gY)
+    {
+        List<int> updatedList = new List<int>();
+
+        for (int i = 0; i < Level.Width; i++)
+        {
+            for (int j = 0; j < Level.Height; j++)
+            {
+                if (i == gX && j == gY)
+                {
+                    updatedList.Add(0);
+                }
+                else
+                {
+                    if (Physics.Raycast(new Ray(new Vector3(i, -j, -1f), new Vector3(0, 0, 3f))))
+                    {
+                        updatedList.Add(1);
+                    }
+                    else
+                    {
+                        updatedList.Add(0);
+                    }
+                }
+            }
+        }
+
+
+        return updatedList;
+    }
+
+    List<Vector3> GeneratePath()
+    {
+        List<Vector3> path = new List<Vector3>();
+
+        int lastPath = PathFinder.finalPath.Count - 1;
+        for (int i = 0; i < PathFinder.finalPath.Count; i++)
+        {
+            Node node = PathFinder.finalPath[PathFinder.finalPath.Count - i - 1];
+            path.Add(new Vector3(node.x, -node.y, 0f));
+
+
+        }
+
+        return path;
+    }
+
+    public List<Vector3> StartPathFinding(int sX, int sY, int gX, int gY)
+    {
+        PathFinder.SetStartNode(sX, sY);
+        PathFinder.SetGoalNode(gX, gY);
+        PathFinder.StartSearch(GenerateTileMap(gX, gY));
+        PathFinder.GetPath();
+
+        return GeneratePath();
     }
 }
