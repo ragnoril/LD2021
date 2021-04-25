@@ -48,18 +48,12 @@ MonoBehaviour:
   digSpeed: 0.33
   buildTime: 0.17
   Status: 0
-  energy: 180
-  fun: 120
-  hunger: 180
-  energyDropSpeed: 0.33
-  funDropSpeed: 0.33
-  hungerDropSpeed: 0.33
-  energyIdleDropSpeed: 0.33
-  funIdleDropSpeed: 0.33
-  hungerIdleDropSpeed: 0.33
-  energyThreshold: 90
-  funThreshold: 60
-  hungerThreshold: 90
+  energy: 6
+  fun: 4
+  hunger: 6
+  energyThreshold: 3
+  funThreshold: 2
+  hungerThreshold: 3
 --- !u!1 &4105997664563959997
 GameObject:
   m_ObjectHideFlags: 0

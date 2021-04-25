@@ -6,16 +6,14 @@ public enum WorkerStates
 {
     Idle,
     Working,
-    Hungry,
-    Sleepy,
-    Moody,
+    Needy,
     TotalCount
 };
 
 public class WorkerAgent : MonoBehaviour
 {
     Task workTask;
-    bool isReadyToWork;
+    bool isReadyToWork, isDead;
     public float moveSpeed, digSpeed, buildTime;
 
     public WorkerStates Status;
@@ -23,10 +21,8 @@ public class WorkerAgent : MonoBehaviour
     int currentTaskID;
    // public TaskManager Tasks;
 
-    public float energy, fun, hunger;
-    public float energyDropSpeed, funDropSpeed, hungerDropSpeed;
-    public float energyIdleDropSpeed, funIdleDropSpeed, hungerIdleDropSpeed;
-    public float energyThreshold, funThreshold, hungerThreshold;
+    public int energy, fun, hunger;
+    public int energyThreshold, funThreshold, hungerThreshold;
     float needCheckCounter;
 
     // Start is called before the first frame update
@@ -60,7 +56,11 @@ public class WorkerAgent : MonoBehaviour
     {
         needCheckCounter += dt;
         if (needCheckCounter > 1) needCheckCounter = 0;
-        if (Status == WorkerStates.Idle)
+        if (Status == WorkerStates.Needy)
+        {
+
+        }
+        else if (Status == WorkerStates.Idle)
         {
             if (needCheckCounter == 0) CheckForNeeds();
             if (Status == WorkerStates.Idle) //if worker's still idle, check job
@@ -89,19 +89,6 @@ public class WorkerAgent : MonoBehaviour
             //if (needCheckCounter == 0) StartOrUpdatePathFinding();
 
         }
-        else if (Status == WorkerStates.Hungry)
-        {
-            // get a new job
-        }
-        else if (Status == WorkerStates.Sleepy)
-        {
-            // get a new job
-        }
-        else if (Status == WorkerStates.Moody)
-        {
-            // get a new job
-        }
-
     }
 
     void StartOrUpdatePathFinding()
@@ -113,23 +100,21 @@ public class WorkerAgent : MonoBehaviour
     }
     void CheckForNeeds()
     {
-        if (hunger < hungerThreshold)
+        if (hunger <= hungerThreshold)
         {
-            Status = WorkerStates.Hungry;
+            Status = WorkerStates.Needy;
             isReadyToWork = false;
         }
-        else if (energy < energyThreshold)
+        else if (energy <= energyThreshold)
         {
-            Status = WorkerStates.Sleepy;
+            Status = WorkerStates.Needy;
             isReadyToWork = false;
         }
-
-        else if (fun < funThreshold)
+        else if (fun <= funThreshold)
         {
-            Status = WorkerStates.Moody;
+            Status = WorkerStates.Needy;
             isReadyToWork = false;
         }
-
     }
 
     IEnumerator Move(List<Vector3> path)
