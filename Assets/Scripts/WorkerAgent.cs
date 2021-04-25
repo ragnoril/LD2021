@@ -23,6 +23,12 @@ public class WorkerAgent : MonoBehaviour
     int currentTaskID;
     public TaskManager Tasks;
 
+    public float energy, fun, hunger;
+    public float energyDropSpeed, funDropSpeed, hungerDropSpeed;
+    public float energyIdleDropSpeed, funIdleDropSpeed, hungerIdleDropSpeed;
+    public float energyThreshold, funThreshold, hungerThreshold;
+    float needCheckCounter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,32 +39,34 @@ public class WorkerAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Check Pathfinding every other second?
-
         DoAI(Time.deltaTime);
-
     }
 
     void DoAI(float dt)
     {
-        CheckForNeeds();
-
+        needCheckCounter += dt;
+        if (needCheckCounter > 1) needCheckCounter = 0;
         if (Status == WorkerStates.Idle)
         {
-            Debug.Log(gameObject.name + " waiting for new job");
-            // get a new job
-            int taskId = GameManager.instance.Tasks.GetAvailableTask(this);
-            currentTaskID = taskId;
-            if (taskId != -1)
+            if (needCheckCounter == 0) CheckForNeeds();
+            if (Status == WorkerStates.Idle) //if worker's still idle, check job
             {
-                Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
-                workTask = GameManager.instance.Tasks.TaskList[taskId];
-                Status = WorkerStates.Working;
-                int sX = Mathf.FloorToInt(transform.position.x);
-                int sY = Mathf.FloorToInt(-transform.position.y);
-                isReadyToWork = false;
-                StartCoroutine(Move(GameManager.instance.StartPathFinding(sX, sY, workTask.X, workTask.Y)));
+                Debug.Log(gameObject.name + " waiting for new job");
+                // get a new job
+                int taskId = GameManager.instance.Tasks.GetAvailableTask(this);
+                currentTaskID = taskId;
+                if (taskId != -1)
+                {
+                    Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
+                    workTask = GameManager.instance.Tasks.TaskList[taskId];
+                    Status = WorkerStates.Working;
+                    isReadyToWork = false;
+                    StartOrUpdatePathFinding();
+                }
             }
+            energy -= energyIdleDropSpeed * dt;
+            hunger -= hungerIdleDropSpeed * dt;
+            fun -= funIdleDropSpeed * dt;
         }
         else if (Status == WorkerStates.Working)
         {
@@ -66,7 +74,10 @@ public class WorkerAgent : MonoBehaviour
             {
                 Debug.Log(gameObject.name + " has new job");
             }
-
+            if (needCheckCounter == 0) StartOrUpdatePathFinding();
+            energy -= energyDropSpeed * dt;
+            hunger -= hungerDropSpeed * dt;
+            fun -= funDropSpeed * dt;
         }
         else if (Status == WorkerStates.Hungry)
         {
@@ -80,18 +91,37 @@ public class WorkerAgent : MonoBehaviour
         {
             // get a new job
         }
+
     }
 
+    void StartOrUpdatePathFinding()
+    {
+        int sX = Mathf.FloorToInt(transform.position.x);
+        int sY = Mathf.FloorToInt(-transform.position.y);
+        if (moveReq != null) StopCoroutine(moveReq);
+        moveReq = StartCoroutine(Move(GameManager.instance.StartPathFinding(sX, sY, workTask.X, workTask.Y)));
+    }
     void CheckForNeeds()
     {
-        ///Status = WorkerStates.Hungry;
+        if (hunger < hungerThreshold)
+        {
+            Status = WorkerStates.Hungry;
+            isReadyToWork = false;
+        }
+        else if (energy < energyThreshold)
+        {
+            Status = WorkerStates.Sleepy;
+            isReadyToWork = false;
+        }
+
+        else if (fun < funThreshold)
+        {
+            Status = WorkerStates.Moody;
+            isReadyToWork = false;
+        }
+
     }
 
-    public void MoveRequest(Vector3 targetPos)        //A move request will be sent via this
-    {
-        if (moveReq != null) StopCoroutine(moveReq);
-        GetPathToTask(targetPos);
-    }
     void GetPathToTask(Vector3 targetPos)
     {
         List<Vector3> path = GameManager.instance.StartPathFinding((int)transform.position.x, (int)transform.position.y, (int)targetPos.x, (int)targetPos.y);
@@ -147,9 +177,9 @@ public class WorkerAgent : MonoBehaviour
     void FinishTask()
     {
         Tasks.RemoveTask(currentTaskID);
+        Status = WorkerStates.Idle;
         isReadyToWork = true;
+        CheckForNeeds();
     }
-
-
 
 }
