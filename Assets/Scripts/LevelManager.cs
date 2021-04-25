@@ -30,6 +30,11 @@ public class LevelManager : MonoBehaviour
             {
                 GameObject go = GameObject.Instantiate(TilePrefab, new Vector3(i, -j, 0), Quaternion.identity);
                 go.transform.SetParent(this.transform);
+
+                TileAgent tile = go.GetComponent<TileAgent>();
+                tile.X = i;
+                tile.Y = j;
+                tile.Value = 0;
             }
         }
     }

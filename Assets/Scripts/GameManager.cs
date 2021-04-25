@@ -65,9 +65,13 @@ public class GameManager : MonoBehaviour
         {
             if (GameMode == GameModes.Dig)
             {
-                if (SelectedTile.CheckIfAvailable())
+                if (SelectedTile != null)
                 {
-                    Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, 0);
+                    if (SelectedTile.CheckIfAvailable())
+                    {
+                        Debug.Log("new dig task added.");
+                        Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, 0);
+                    }
                 }
             }
         }

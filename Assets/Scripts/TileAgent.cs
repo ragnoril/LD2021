@@ -18,7 +18,13 @@ public class TileAgent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (GameManager.instance.SelectedTile == this)
+        {
+            Debug.DrawRay(new Vector3(X - 1, -Y, -1f), new Vector3(0, 0, 2f));
+            Debug.DrawRay(new Vector3(X + 1, -Y, -1f), new Vector3(0, 0, 2f));
+            Debug.DrawRay(new Vector3(X, -Y - 1, -1f), new Vector3(0, 0, 2f));
+            Debug.DrawRay(new Vector3(X, -Y + 1, -1f), new Vector3(0, 0, 2f));
+        }
     }
 
     private void OnMouseOver()
@@ -42,25 +48,43 @@ public class TileAgent : MonoBehaviour
 
     public bool CheckIfAvailable()
     {
-        if (!Physics.Raycast(new Vector3(X - 1, Y, -1f), new Vector3(X, Y, 1f)))
+        /*
+        RaycastHit hitInfo;
+        Physics.Raycast(new Ray(new Vector3(X - 1, Y, -1f), new Vector3(0, 0, 3f)), out hitInfo);
+        Debug.Log("west " + hitInfo.collider.ToString());
+        Physics.Raycast(new Ray(new Vector3(X + 1, Y, -1f), new Vector3(0, 0, 3f)), out hitInfo);
+        Debug.Log("east " + hitInfo.collider.ToString());
+        Physics.Raycast(new Ray(new Vector3(X, -(Y - 1), -1f), new Vector3(0, 0, 3f)), out hitInfo);
+        Debug.Log("south " + hitInfo.collider.ToString());
+        Physics.Raycast(new Ray(new Vector3(X, -(Y + 1), -1f), new Vector3(0, 0, 3f)), out hitInfo);
+        Debug.Log("north " + hitInfo.collider.ToString());
+        */
+
+        if (!Physics.Raycast(new Ray(new Vector3(X - 1, Y, -1f), new Vector3(0, 0, 3f))))
         {
+            Debug.Log("west of it empty");
             return true;
         }
 
-        if (!Physics.Raycast(new Vector3(X + 1, Y, -1f), new Vector3(X, Y, 1f)))
+        if (!Physics.Raycast(new Ray(new Vector3(X + 1, Y, -1f), new Vector3(0, 0, 3f))))
         {
+            Debug.Log("east of it empty");
             return true;
         }
 
-        if (!Physics.Raycast(new Vector3(X, Y - 1, -1f), new Vector3(X, Y, 1f)))
+        if (!Physics.Raycast(new Ray(new Vector3(X, -(Y - 1), -1f), new Vector3(0, 0, 3f))))
         {
+            Debug.Log("south of it empty");
             return true;
         }
 
-        if (!Physics.Raycast(new Vector3(X, Y + 1, -1f), new Vector3(X, Y, 1f)))
+        if (!Physics.Raycast(new Ray(new Vector3(X, -(Y + 1), -1f), new Vector3(0, 0, 3f))))
         {
+            Debug.Log("north of it empty");
             return true;
         }
+
+        Debug.Log("no empty");
 
         return false;
     }
