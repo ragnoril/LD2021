@@ -16,7 +16,7 @@ public class WorkerAgent : MonoBehaviour
 {
     Task workTask;
     bool isReadyToWork;
-    public float speed;
+    public float moveSpeed, digSpeed, buildTime;
 
     public WorkerStates Status;
     Coroutine moveReq;
@@ -97,9 +97,10 @@ public class WorkerAgent : MonoBehaviour
 
     IEnumerator Move(List<Vector3> path)
     {
+        Vector3 lastPos=Vector3.zero;
         if (path.Count > 0)
         {
-            Vector3 lastPos = path[path.Count - 1];//in case we need lastPos later
+            lastPos = path[path.Count - 1];//in case we need lastPos later
             path.RemoveAt(path.Count - 1);
         }
 
@@ -107,13 +108,38 @@ public class WorkerAgent : MonoBehaviour
         {
             while (Vector3.Distance(transform.position, pos) > 0.01f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, pos, speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, pos, moveSpeed * Time.deltaTime);
                 yield return null;
             }
 
         }
+        if (workTask.Type == 0)
+        {
+            //dig'e basla 
+            StartCoroutine(Digging(lastPos));
+        }
+        else
+        {
+            //build'e basla
+            float timer = 0;
+            while (timer<buildTime)
+            {
+                yield return null;
+            }
+            isReadyToWork = true;
+        }
+    }
 
+    IEnumerator Digging(Vector3 digPos)
+    {
+        while (Vector3.Distance(transform.position, digPos) > 0.01f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, digPos, digSpeed * Time.deltaTime);
+            yield return null;
+        }
         isReadyToWork = true;
     }
+
+
 
 }
