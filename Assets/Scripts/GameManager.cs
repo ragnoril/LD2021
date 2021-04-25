@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
         Workers = new List<WorkerAgent>();
         for (int i = 0; i < StartingWorkerCount; i++)
         {
-            GameObject go = GameObject.Instantiate(WorkerPrefab, new Vector3(3f+i, 1f, 0), Quaternion.identity);
+            GameObject go = GameObject.Instantiate(WorkerPrefab, new Vector3(3f+i, 0f, 0), Quaternion.identity);
             go.transform.SetParent(this.transform);
 
             go.name = "Worker_" + i.ToString();
@@ -130,23 +130,25 @@ public class GameManager : MonoBehaviour
     {
         List<int> updatedList = new List<int>();
 
-        for (int i = 0; i < Level.Width; i++)
+        for (int j = 0; j < Level.Height; j++)
         {
-            for (int j = 0; j < Level.Height; j++)
+            for (int i = 0; i < Level.Width; i++)
             {
                 if (i == gX && j == gY)
                 {
-                    updatedList.Add(0);
+                    updatedList.Add(1);
                 }
                 else
                 {
-                    if (Physics.Raycast(new Ray(new Vector3(i, -j, -1f), new Vector3(0, 0, 3f))))
+                    var layerMask = LayerMask.GetMask("Worker");
+                    layerMask = ~layerMask;
+                    if (Physics.Raycast(new Ray(new Vector3(i, -j, -1f), new Vector3(0, 0, 3f)),999f, layerMask))
                     {
-                        updatedList.Add(1);
+                        updatedList.Add(0);
                     }
                     else
                     {
-                        updatedList.Add(0);
+                        updatedList.Add(1);
                     }
                 }
             }
@@ -161,12 +163,10 @@ public class GameManager : MonoBehaviour
         List<Vector3> path = new List<Vector3>();
 
         int lastPath = PathFinder.finalPath.Count - 1;
-        for (int i = 0; i < PathFinder.finalPath.Count; i++)
+        for (int i = 0; i < PathFinder.finalPath.Count - 1; i++)
         {
             Node node = PathFinder.finalPath[PathFinder.finalPath.Count - i - 1];
             path.Add(new Vector3(node.x, -node.y, 0f));
-
-
         }
 
         return path;
@@ -174,6 +174,7 @@ public class GameManager : MonoBehaviour
 
     public List<Vector3> StartPathFinding(int sX, int sY, int gX, int gY)
     {
+        PathFinder.SetMapSize(Level.Width, Level.Height);
         PathFinder.SetStartNode(sX, sY);
         PathFinder.SetGoalNode(gX, gY);
         PathFinder.StartSearch(GenerateTileMap(gX, gY));

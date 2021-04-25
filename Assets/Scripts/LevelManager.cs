@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
     {
         for(int i = 0; i < Width; i++)
         {
-            for (int j = 0; j < Height; j++)
+            for (int j = 1; j < Height; j++)
             {
                 GameObject go = GameObject.Instantiate(TilePrefab, new Vector3(i, -j, 0), Quaternion.identity);
                 go.transform.SetParent(this.transform);

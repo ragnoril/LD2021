@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2605276869064381537}
   - component: {fileID: 4739218737778588933}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Worker
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,6 +48,19 @@ MonoBehaviour:
   digSpeed: 5
   buildTime: 5
   Status: 0
+  Tasks: {fileID: 0}
+  energy: 0
+  fun: 0
+  hunger: 0
+  energyDropSpeed: 0
+  funDropSpeed: 0
+  hungerDropSpeed: 0
+  energyIdleDropSpeed: 0
+  funIdleDropSpeed: 0
+  hungerIdleDropSpeed: 0
+  energyThreshold: 0
+  funThreshold: 0
+  hungerThreshold: 0
 --- !u!1 &4105997664563959997
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +73,7 @@ GameObject:
   - component: {fileID: 7719976964567604492}
   - component: {fileID: 8428602857505758205}
   - component: {fileID: 1681869478362150138}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
