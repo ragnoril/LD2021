@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject WorkerPrefab;
 
+    public List<WorkerAgent> Workers;
+    public int StartingWorkerCount;
+
     public GameModes GameMode;
     public TileAgent SelectedTile;
 
@@ -62,6 +65,8 @@ public class GameManager : MonoBehaviour
         PathFinder = new AStar();
         PathFinder.isDiagonalMovementAllowed = false;
         PathFinder.isNodeCostEnabled = false;
+
+        CreateWorkers();
     }
 
     // Update is called once per frame
@@ -104,6 +109,21 @@ public class GameManager : MonoBehaviour
     void BuildAction()
     {
 
+    }
+
+    void CreateWorkers()
+    {
+        Workers = new List<WorkerAgent>();
+        for (int i = 0; i < StartingWorkerCount; i++)
+        {
+            GameObject go = GameObject.Instantiate(WorkerPrefab, new Vector3(3f+i, 1f, 0), Quaternion.identity);
+            go.transform.SetParent(this.transform);
+
+            go.name = "Worker_" + i.ToString();
+            WorkerAgent worker = go.GetComponent<WorkerAgent>();
+            Workers.Add(worker);
+
+        }
     }
 
     List<int> GenerateTileMap(int gX, int gY)

@@ -14,6 +14,8 @@ public enum WorkerStates
 
 public class WorkerAgent : MonoBehaviour
 {
+    Task workTask;
+    bool isReadyToWork;
     public float speed;
 
     public WorkerStates Status;
@@ -22,6 +24,7 @@ public class WorkerAgent : MonoBehaviour
     void Start()
     {
         Status = WorkerStates.Idle;
+        isReadyToWork = false;
     }
 
     // Update is called once per frame
@@ -39,11 +42,27 @@ public class WorkerAgent : MonoBehaviour
 
         if (Status == WorkerStates.Idle)
         {
+            Debug.Log(gameObject.name + " waiting for new job");
             // get a new job
+            int taskId = GameManager.instance.Tasks.GetAvailableTask(this);
+            if (taskId != -1)
+            {
+                Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
+                workTask = GameManager.instance.Tasks.TaskList[taskId];
+                Status = WorkerStates.Working;
+                int sX = Mathf.FloorToInt(transform.position.x);
+                int sY = Mathf.FloorToInt(-transform.position.y);
+                isReadyToWork = false;
+                StartCoroutine(Move(GameManager.instance.StartPathFinding(sX, sY, workTask.X, workTask.Y)));
+            }
         }
         else if (Status == WorkerStates.Working)
         {
-            // get a new job
+            if (isReadyToWork)
+            {
+                Debug.Log(gameObject.name + " has new job");
+            }
+
         }
         else if (Status == WorkerStates.Hungry)
         {
@@ -83,16 +102,18 @@ public class WorkerAgent : MonoBehaviour
             Vector3 lastPos = path[path.Count - 1];//in case we need lastPos later
             path.RemoveAt(path.Count - 1);
         }
+
         foreach (Vector3 pos in path)
         {
-            while (transform.position != pos)
+            while (Vector3.Distance(transform.position, pos) > 0.01f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, pos, speed * Time.deltaTime);
-                yield return 0;
+                yield return null;
             }
 
         }
 
+        isReadyToWork = true;
     }
 
 }

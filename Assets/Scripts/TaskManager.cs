@@ -28,29 +28,29 @@ public class Task
         // for dig or building
         if (!Physics.Raycast(new Ray(new Vector3(X - 1, -Y, -1f), new Vector3(0, 0, 3f))))
         {
-            Debug.Log("west of it empty");
+            //Debug.Log("west of it empty");
             return true;
         }
 
         if (!Physics.Raycast(new Ray(new Vector3(X + 1, -Y, -1f), new Vector3(0, 0, 3f))))
         {
-            Debug.Log("east of it empty");
+            //Debug.Log("east of it empty");
             return true;
         }
 
         if (!Physics.Raycast(new Ray(new Vector3(X, -(Y - 1), -1f), new Vector3(0, 0, 3f))))
         {
-            Debug.Log("south of it empty");
+            //Debug.Log("south of it empty");
             return true;
         }
 
         if (!Physics.Raycast(new Ray(new Vector3(X, -(Y + 1), -1f), new Vector3(0, 0, 3f))))
         {
-            Debug.Log("north of it empty");
+            //Debug.Log("north of it empty");
             return true;
         }
 
-        Debug.Log("no empty");
+        //Debug.Log("no empty");
 
         return false;
     }

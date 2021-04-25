@@ -43,5 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79cad419fc2a75a44946225dd55228e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MusicPlayer: {fileID: 0}
   Level: {fileID: 0}
   UI: {fileID: 0}
+  Tasks: {fileID: 0}
+  WorkerPrefab: {fileID: 2505745176940529559, guid: 02f5742cf6353f941b94581b789aa6d0, type: 3}
+  Workers: []
+  StartingWorkerCount: 1
+  GameMode: 0
+  SelectedTile: {fileID: 0}
