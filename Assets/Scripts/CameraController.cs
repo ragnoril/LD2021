@@ -20,7 +20,8 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        GetUserInput(Time.deltaTime);
+        if (Input.GetMouseButton(1))
+            GetUserInput(Time.deltaTime);
 
     }
 
