@@ -65,23 +65,37 @@ public class GameManager : MonoBehaviour
         {
             if (GameMode == GameModes.Dig)
             {
-                if (SelectedTile != null)
+                DigAction();
+            }
+            else if (GameMode == GameModes.Build)
+            {
+                BuildAction();
+            }
+        }
+    }
+
+    void DigAction()
+    {
+        if (SelectedTile != null)
+        {
+            if (SelectedTile.CheckIfAvailable())
+            {
+                int taskId = Tasks.CheckTaskListForDuplicate(SelectedTile.X, SelectedTile.Y, 0, 0);
+                if (taskId == -1)
                 {
-                    if (SelectedTile.CheckIfAvailable())
-                    {
-                        int taskId = Tasks.CheckTaskListForDuplicate(SelectedTile.X, SelectedTile.Y, 0, 0);
-                        if (taskId == -1)
-                        {
-                            Debug.Log("new dig task added.");
-                            Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, 0);
-                        }
-                        else
-                        {
-                            Tasks.RemoveTask(taskId);
-                        }
-                    }
+                    Debug.Log("new dig task added.");
+                    Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, 0);
+                }
+                else
+                {
+                    Tasks.RemoveTask(taskId);
                 }
             }
         }
+    }
+
+    void BuildAction()
+    {
+
     }
 }
