@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &135523259 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6910366174056587661, guid: b3984e13c653c0a419d83760269163ca, type: 3}
+  m_PrefabInstance: {fileID: 3481819237447796881}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf9bb132102e0f408566e0e925927f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &550878083 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5938797529957201064, guid: 569f58b3de0a6b54fbba510b35d3c8ba, type: 3}
@@ -384,6 +395,74 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3984e13c653c0a419d83760269163ca, type: 3}
+--- !u!1001 &3970031944941626572
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3656834516383768773, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7877243343077200415, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+      propertyPath: m_Name
+      value: SfxManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+--- !u!114 &3970031944941626573 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5690846793767038315, guid: 079c4583947698e4a985456d50cfe20d, type: 3}
+  m_PrefabInstance: {fileID: 3970031944941626572}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaafb605b2847954b872e553c06a482f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5938797529432149803
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -649,6 +728,14 @@ PrefabInstance:
       propertyPath: DayCycle
       value: 
       objectReference: {fileID: 2085935755}
+    - target: {fileID: 7600359737044395693, guid: a9ad2d3b23a3fe4498b268cb0a5812e9, type: 3}
+      propertyPath: SfxPlayer
+      value: 
+      objectReference: {fileID: 3970031944941626573}
+    - target: {fileID: 7600359737044395693, guid: a9ad2d3b23a3fe4498b268cb0a5812e9, type: 3}
+      propertyPath: MusicPlayer
+      value: 
+      objectReference: {fileID: 135523259}
     - target: {fileID: 7600359737044395694, guid: a9ad2d3b23a3fe4498b268cb0a5812e9, type: 3}
       propertyPath: m_RootOrder
       value: 2

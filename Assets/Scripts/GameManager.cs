@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     }
 
     public MusicManager MusicPlayer;
+    public SfxManager SfxPlayer;
     public LevelManager Level;
     public UIManager UI;
     public TaskManager Tasks;
