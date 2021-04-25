@@ -15,9 +15,9 @@ public enum WorkerStates
 public class WorkerAgent : MonoBehaviour
 {
     public float speed;
-    public Vector3 targetPos;
 
     public WorkerStates Status;
+    Coroutine moveReq;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,41 +64,35 @@ public class WorkerAgent : MonoBehaviour
         ///Status = WorkerStates.Hungry;
     }
 
-    public void MoveX(int tile)
-    {
-        targetPos = transform.position + new Vector3(tile, 0, 0);
-    }
-    public void MoveY(int tile)
-    {
-        targetPos = transform.position + new Vector3(0, tile, 0);
-    }
-
     public void MoveRequest(Vector3 targetPos)        //A move request will be sent via this
     {
-        this.targetPos = targetPos;
-        //Add pathfingind here ie: pathfinding(currentPos, targetPos)//output can be a vector
-        //Ex: ((-1,3),(1,5),(-2,4),(2,3)) -> -1:left, 1:right, -2:down, 2:up, (-1,3): 3 tiles left, (2,3): 3 tiles up
-
-        StartCoroutine(Move());
+        if (moveReq != null) StopCoroutine(moveReq);
+        GetPathToTask(targetPos);
+    }
+    void GetPathToTask(Vector3 targetPos)
+    {
+        List<Vector3> path = GameManager.instance.StartPathFinding((int)transform.position.x, (int)transform.position.y, (int)targetPos.x, (int)targetPos.y);
+        moveReq = StartCoroutine(Move(path));
     }
 
-    IEnumerator Move()
-    {
 
-        //foreach loop for each Pathfinding positions
+    IEnumerator Move(List<Vector3> path)
+    {
+        if (path.Count > 0)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+            Vector3 lastPos = path[path.Count - 1];//in case we need lastPos later
+            path.RemoveAt(path.Count - 1);
         }
-        yield return 0;
+        foreach (Vector3 pos in path)
+        {
+            while (transform.position != pos)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, pos, speed * Time.deltaTime);
+                yield return 0;
+            }
+
+        }
 
     }
 
-    void GetPathToTask()
-    {
-        // worker'in coordinatlar
-        // task coords
-        // return path
-        // ignore last coord
-        //GameManager.instance.StartPathFinding(, Y, 0, 0);
-    }
 }
