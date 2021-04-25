@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public LevelManager Level;
     public UIManager UI;
     public TaskManager Tasks;
+    public DayCycleManager DayCycle;
 
     public GameObject WorkerPrefab;
 
@@ -67,6 +68,8 @@ public class GameManager : MonoBehaviour
         PathFinder.isNodeCostEnabled = false;
 
         CreateWorkers();
+
+        DayCycle.IsRunning = true;
     }
 
     // Update is called once per frame

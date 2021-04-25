@@ -34,12 +34,26 @@ public class WorkerAgent : MonoBehaviour
     {
         Status = WorkerStates.Idle;
         isReadyToWork = false;
+
+        GameManager.instance.DayCycle.OnPeriodComplete += GettingTired;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.instance.DayCycle.OnPeriodComplete -= GettingTired;
     }
 
     // Update is called once per frame
     void Update()
     {
         DoAI(Time.deltaTime);
+    }
+
+    void GettingTired()
+    {
+        energy -= 1;
+        hunger -= 1;
+        fun -= 1;
     }
 
     void DoAI(float dt)
@@ -64,9 +78,7 @@ public class WorkerAgent : MonoBehaviour
                     StartOrUpdatePathFinding();
                 }
             }
-            energy -= energyIdleDropSpeed * dt;
-            hunger -= hungerIdleDropSpeed * dt;
-            fun -= funIdleDropSpeed * dt;
+
         }
         else if (Status == WorkerStates.Working)
         {
@@ -75,9 +87,7 @@ public class WorkerAgent : MonoBehaviour
                 Debug.Log(gameObject.name + " has new job");
             }
             //if (needCheckCounter == 0) StartOrUpdatePathFinding();
-            energy -= energyDropSpeed * dt;
-            hunger -= hungerDropSpeed * dt;
-            fun -= funDropSpeed * dt;
+
         }
         else if (Status == WorkerStates.Hungry)
         {
