@@ -12,6 +12,9 @@ public class Task
     public GameObject TaskIcon;
     public WorkerAgent Claimant;
 
+    public TileAgent TaskTile;
+    public GameObject BuildingPrefab;
+
     public bool IsSame(int x, int y, int type, int value)
     {
         if (x == X && y == Y && type == Type && value == Value)
@@ -60,6 +63,23 @@ public class TaskManager : MonoBehaviour
 {
     public List<Task> TaskList = new List<Task>();
     public GameObject TaskIconPrefab;
+
+    public int AddNewTask(int x, int y, int type, TileAgent tile)
+    {
+        Task task = new Task();
+        task.X = x;
+        task.Y = y;
+        task.Type = type;
+        task.Value = 0;
+        task.Status = 0;
+        task.TaskTile = tile;
+        task.TaskIcon = GameObject.Instantiate(TaskIconPrefab, new Vector3(x, -y, 0f), Quaternion.identity);
+        task.TaskIcon.transform.SetParent(this.transform);
+
+        TaskList.Add(task);
+
+        return TaskList.Count - 1;
+    }
 
     public int AddNewTask(int x, int y, int type, int value)
     {

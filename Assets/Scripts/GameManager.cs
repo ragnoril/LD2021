@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
                 if (taskId == -1)
                 {
                     Debug.Log("new dig task added.");
-                    Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, 0);
+                    Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, SelectedTile);
                 }
                 else
                 {
