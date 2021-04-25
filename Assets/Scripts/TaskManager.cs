@@ -10,6 +10,7 @@ public class Task
     public int Status; // 0 waiting 1 claimed
 
     public GameObject TaskIcon;
+    public WorkerAgent Claimant;
 
     public bool IsSame(int x, int y, int type, int value)
     {
@@ -17,6 +18,41 @@ public class Task
             return true;
         else
             return false;
+    }
+
+    public bool CheckIfAvailable()
+    {
+        // if building check if we have enough resources
+        //
+
+        // for dig or building
+        if (!Physics.Raycast(new Ray(new Vector3(X - 1, -Y, -1f), new Vector3(0, 0, 3f))))
+        {
+            Debug.Log("west of it empty");
+            return true;
+        }
+
+        if (!Physics.Raycast(new Ray(new Vector3(X + 1, -Y, -1f), new Vector3(0, 0, 3f))))
+        {
+            Debug.Log("east of it empty");
+            return true;
+        }
+
+        if (!Physics.Raycast(new Ray(new Vector3(X, -(Y - 1), -1f), new Vector3(0, 0, 3f))))
+        {
+            Debug.Log("south of it empty");
+            return true;
+        }
+
+        if (!Physics.Raycast(new Ray(new Vector3(X, -(Y + 1), -1f), new Vector3(0, 0, 3f))))
+        {
+            Debug.Log("north of it empty");
+            return true;
+        }
+
+        Debug.Log("no empty");
+
+        return false;
     }
 }
 
@@ -51,13 +87,14 @@ public class TaskManager : MonoBehaviour
         return -1;
     }
 
-    public int GetAvailableTask()
+    public int GetAvailableTask(WorkerAgent worker)
     {
         for(int i = 0; i < TaskList.Count; i++)
         {
-            if (TaskList[i].Status == 0)
+            if (TaskList[i].Status == 0 && TaskList[i].CheckIfAvailable())
             {
                 TaskList[i].Status = 1;
+                TaskList[i].Claimant = worker;
                 return i;
             }
         }
@@ -67,6 +104,7 @@ public class TaskManager : MonoBehaviour
 
     public void RemoveTask(int id)
     {
+        //TaskList[id].Claimant 
         Destroy(TaskList[id].TaskIcon);
         TaskList.RemoveAt(id);
     }

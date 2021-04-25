@@ -78,7 +78,8 @@ public class GameManager : MonoBehaviour
     {
         if (SelectedTile != null)
         {
-            if (SelectedTile.CheckIfAvailable())
+            // check if there is a building above selected tile
+            //if (SelectedTile.CheckIfAvailable())
             {
                 int taskId = Tasks.CheckTaskListForDuplicate(SelectedTile.X, SelectedTile.Y, 0, 0);
                 if (taskId == -1)
