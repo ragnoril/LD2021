@@ -77,4 +77,9 @@ public class TileAgent : MonoBehaviour
         return false;
     }
 
+    public void Dug()
+    {
+        //+ore ekle
+        Destroy(gameObject);
+    }
 }

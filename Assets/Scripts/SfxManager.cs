@@ -4,8 +4,26 @@ using UnityEngine;
 
 public enum SoundClips
 {
-    Click,
-    TotalCount
+    BuildingBuilt,
+    BuildingBroken,
+    ButtonClick1,
+    ButtonClic2,
+    Digging1,
+    Digging2,
+    EnergyLow,
+    TaskAdd1,
+    TaskAdd2,
+    TaskCancel,
+    WorkerDead1,
+    WorkerDead2,
+    WorkerDead3,
+    WorkerNewTask,
+    WorkerHungry,
+    WorkerMoody1,
+    WorkerMoody2,
+    WorkerMoody3,
+    WorkerMoody4,
+    WorkerSleepy
 };
 
 public class SfxManager : MonoBehaviour
@@ -23,6 +41,7 @@ public class SfxManager : MonoBehaviour
 
 
     public bool IsPlaying;
+
 
     public void PlaySfx(int id)
     {

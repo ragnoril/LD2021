@@ -45,7 +45,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 2462110128732260246}
-  Clips: []
+  Clips:
+  - {fileID: 8300000, guid: 3982ac5be45d24d438b9fb125c77faa8, type: 3}
+  - {fileID: 8300000, guid: e4af6e15ebdf9f4409c29741fab43496, type: 3}
+  - {fileID: 8300000, guid: 89b11e143d516a54e8aea7511c2b92c7, type: 3}
+  - {fileID: 8300000, guid: f1e045f0b01cd93449e679cdd591a5af, type: 3}
+  - {fileID: 8300000, guid: a890880ef6329f6418b60f229f3eeca7, type: 3}
+  - {fileID: 8300000, guid: ff0ea5f49506f0246862261cd130bbed, type: 3}
+  - {fileID: 8300000, guid: a9edd89bdebb01942bf95d004d75958c, type: 3}
+  - {fileID: 8300000, guid: 867a49a959162404bb881fcc19b1b9e2, type: 3}
+  - {fileID: 8300000, guid: 03eef108dae698e47bb8c6c59a0617a0, type: 3}
+  - {fileID: 8300000, guid: 1acb822c84f6e184b98e9cb0262f5e21, type: 3}
+  - {fileID: 8300000, guid: a8856d56a8ff0974fa812fc30fd62f00, type: 3}
+  - {fileID: 8300000, guid: cffa32803b580284e9fffaa290a8f11c, type: 3}
+  - {fileID: 8300000, guid: eef038d8e124ed649820af7882de4dde, type: 3}
+  - {fileID: 8300000, guid: ccb0332ac5153ac499da758a3e71fa77, type: 3}
+  - {fileID: 8300000, guid: 8d893c1550b1f504f84739c67f29acb8, type: 3}
+  - {fileID: 8300000, guid: d6778027baa071b4fbc2c4d813f9a95a, type: 3}
+  - {fileID: 8300000, guid: 473fda7a40344b7489434a898fae3e60, type: 3}
+  - {fileID: 8300000, guid: ea272a6862fa7304ab5dc6bf801e7299, type: 3}
+  - {fileID: 8300000, guid: d8a2312c8762aed43a8e3c61bc8b872d, type: 3}
+  - {fileID: 8300000, guid: 2536d587af59fec4ea21a24a7c1b5859, type: 3}
   IsPlaying: 0
 --- !u!82 &2462110128732260246
 AudioSource:

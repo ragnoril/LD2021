@@ -62,16 +62,17 @@ public class WorkerAgent : MonoBehaviour
         }
         else if (Status == WorkerStates.Idle)
         {
-            if (needCheckCounter == 0) CheckForNeeds();
+            //if (needCheckCounter == 0) CheckForNeeds();
             if (Status == WorkerStates.Idle) //if worker's still idle, check job
             {
                 //Debug.Log(gameObject.name + " waiting for new job");
                 // get a new job
                 int taskId = GameManager.instance.Tasks.GetAvailableTask(this);
                 currentTaskID = taskId;
+                if(taskId > -1)Debug.Log(taskId);
                 if (taskId != -1)
                 {
-                    Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
+                    //Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
                     workTask = GameManager.instance.Tasks.TaskList[taskId];
                     Status = WorkerStates.Working;
                     isReadyToWork = false;
@@ -84,7 +85,7 @@ public class WorkerAgent : MonoBehaviour
         {
             if (isReadyToWork)
             {
-                Debug.Log(gameObject.name + " has new job");
+                //Debug.Log(gameObject.name + " has new job");
             }
             //if (needCheckCounter == 0) StartOrUpdatePathFinding();
 
@@ -94,8 +95,9 @@ public class WorkerAgent : MonoBehaviour
     void StartOrUpdatePathFinding()
     {
         int sX = Mathf.FloorToInt(transform.position.x);
-        int sY = Mathf.FloorToInt(-transform.position.y);
+        int sY = -Mathf.FloorToInt(transform.position.y);
         if (moveReq != null) StopCoroutine(moveReq);
+        Debug.Log("current Pos:"+sX + "," + sY + "\n Target Pos:" + workTask.X + "," + workTask.Y);
         moveReq = StartCoroutine(Move(GameManager.instance.StartPathFinding(sX, sY, workTask.X, workTask.Y)));
     }
     void CheckForNeeds()
@@ -119,7 +121,7 @@ public class WorkerAgent : MonoBehaviour
 
     IEnumerator Move(List<Vector3> path)
     {
-        Debug.Log("Moving Started");
+        //Debug.Log("Moving Started");
         Vector3 lastPos=Vector3.zero;
         if (path.Count > 0)
         {
@@ -129,7 +131,7 @@ public class WorkerAgent : MonoBehaviour
 
         foreach (Vector3 pos in path)
         {
-            while (Vector3.Distance(transform.position, pos) > 0.01f)
+            while (Vector3.Distance(transform.position, pos) > 0)
             {
                 transform.position = Vector3.MoveTowards(transform.position, pos, moveSpeed * Time.deltaTime);
                 yield return null;
@@ -139,38 +141,40 @@ public class WorkerAgent : MonoBehaviour
         if (workTask.Type == 0)
         {
             //dig'e basla 
+            //Debug.Log("Moving Ended");
             StartCoroutine(Digging(lastPos));
         }
         else
         {
             //build'e basla
+            //Debug.Log("Moving Ended");
             float timer = 0;
             while (timer<buildTime)
             {
                 yield return null;
             }
         }
-        Debug.Log("Moving Ended");
     }
 
     IEnumerator Digging(Vector3 digPos)
     {
-        Debug.Log("Digging Started");
-        while (Vector3.Distance(transform.position, digPos) > 0.01f)
+        //Debug.Log("Digging Started");
+        while (Vector3.Distance(transform.position, digPos) > 0)
         {
             transform.position = Vector3.MoveTowards(transform.position, digPos, digSpeed * Time.deltaTime);
             yield return null;
         }
-        Debug.Log("Digging Ended");
+        //Debug.Log("Digging Ended");
+        workTask.TaskTile.Dug();
         FinishTask(currentTaskID);
     }
 
-    void FinishTask(int currentTaskID=-5)
+    void FinishTask(int currentTaskID)
     {
-        if (currentTaskID != -5) GameManager.instance.Tasks.RemoveTask(currentTaskID);
+        GameManager.instance.Tasks.RemoveTask(currentTaskID);
         Status = WorkerStates.Idle;
         isReadyToWork = true;
-        CheckForNeeds();
+        //CheckForNeeds();
     }
 
 }

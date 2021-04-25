@@ -15,4 +15,14 @@ public class UIManager : MonoBehaviour
         GameManager.instance.GameMode = GameModes.Build;
     }
 
+    public void SFXMuteCommand()
+    {
+        GameManager.instance.SfxPlayer.IsPlaying = !GameManager.instance.SfxPlayer.IsPlaying;
+    }
+    public void MusicMuteCommand()
+    {
+        GameManager.instance.MusicPlayer.IsPlaying = !GameManager.instance.MusicPlayer.IsPlaying;
+    }
+
+
 }
