@@ -2,20 +2,66 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum WorkerStates
+{
+    Idle,
+    Working,
+    Hungry,
+    Sleepy,
+    Moody,
+    TotalCount
+};
+
 public class WorkerAgent : MonoBehaviour
 {
     public float speed;
     public Vector3 targetPos;
+
+    public WorkerStates Status;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Status = WorkerStates.Idle;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Check Pathfinding every other second?
+
+        DoAI(Time.deltaTime);
+
+    }
+
+    void DoAI(float dt)
+    {
+        CheckForNeeds();
+
+        if (Status == WorkerStates.Idle)
+        {
+            // get a new job
+        }
+        else if (Status == WorkerStates.Working)
+        {
+            // get a new job
+        }
+        else if (Status == WorkerStates.Hungry)
+        {
+            // get a new job
+        }
+        else if (Status == WorkerStates.Sleepy)
+        {
+            // get a new job
+        }
+        else if (Status == WorkerStates.Moody)
+        {
+            // get a new job
+        }
+    }
+
+    void CheckForNeeds()
+    {
+        ///Status = WorkerStates.Hungry;
     }
 
     public void MoveX(int tile)
