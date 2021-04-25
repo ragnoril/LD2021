@@ -44,23 +44,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc9de98394b35344aa1f7e95d0d567c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  digSpeed: 5
-  buildTime: 5
+  moveSpeed: 0.67
+  digSpeed: 0.33
+  buildTime: 0.17
   Status: 0
-  Tasks: {fileID: 0}
-  energy: 0
-  fun: 0
-  hunger: 0
-  energyDropSpeed: 0
-  funDropSpeed: 0
-  hungerDropSpeed: 0
-  energyIdleDropSpeed: 0
-  funIdleDropSpeed: 0
-  hungerIdleDropSpeed: 0
-  energyThreshold: 0
-  funThreshold: 0
-  hungerThreshold: 0
+  energy: 180
+  fun: 120
+  hunger: 180
+  energyDropSpeed: 0.33
+  funDropSpeed: 0.33
+  hungerDropSpeed: 0.33
+  energyIdleDropSpeed: 0.33
+  funIdleDropSpeed: 0.33
+  hungerIdleDropSpeed: 0.33
+  energyThreshold: 90
+  funThreshold: 60
+  hungerThreshold: 90
 --- !u!1 &4105997664563959997
 GameObject:
   m_ObjectHideFlags: 0

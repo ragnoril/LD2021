@@ -21,7 +21,7 @@ public class WorkerAgent : MonoBehaviour
     public WorkerStates Status;
     Coroutine moveReq;
     int currentTaskID;
-    public TaskManager Tasks;
+   // public TaskManager Tasks;
 
     public float energy, fun, hunger;
     public float energyDropSpeed, funDropSpeed, hungerDropSpeed;
@@ -51,7 +51,7 @@ public class WorkerAgent : MonoBehaviour
             if (needCheckCounter == 0) CheckForNeeds();
             if (Status == WorkerStates.Idle) //if worker's still idle, check job
             {
-                Debug.Log(gameObject.name + " waiting for new job");
+                //Debug.Log(gameObject.name + " waiting for new job");
                 // get a new job
                 int taskId = GameManager.instance.Tasks.GetAvailableTask(this);
                 currentTaskID = taskId;
@@ -74,7 +74,7 @@ public class WorkerAgent : MonoBehaviour
             {
                 Debug.Log(gameObject.name + " has new job");
             }
-            if (needCheckCounter == 0) StartOrUpdatePathFinding();
+            //if (needCheckCounter == 0) StartOrUpdatePathFinding();
             energy -= energyDropSpeed * dt;
             hunger -= hungerDropSpeed * dt;
             fun -= funDropSpeed * dt;
@@ -122,15 +122,9 @@ public class WorkerAgent : MonoBehaviour
 
     }
 
-    void GetPathToTask(Vector3 targetPos)
-    {
-        List<Vector3> path = GameManager.instance.StartPathFinding((int)transform.position.x, (int)transform.position.y, (int)targetPos.x, (int)targetPos.y);
-        moveReq = StartCoroutine(Move(path));
-    }
-
-
     IEnumerator Move(List<Vector3> path)
     {
+        Debug.Log("Moving Started");
         Vector3 lastPos=Vector3.zero;
         if (path.Count > 0)
         {
@@ -160,23 +154,25 @@ public class WorkerAgent : MonoBehaviour
             {
                 yield return null;
             }
-            FinishTask();
         }
+        Debug.Log("Moving Ended");
     }
 
     IEnumerator Digging(Vector3 digPos)
     {
+        Debug.Log("Digging Started");
         while (Vector3.Distance(transform.position, digPos) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(transform.position, digPos, digSpeed * Time.deltaTime);
             yield return null;
         }
-        FinishTask();
+        Debug.Log("Digging Ended");
+        FinishTask(currentTaskID);
     }
 
-    void FinishTask()
+    void FinishTask(int currentTaskID=-5)
     {
-        Tasks.RemoveTask(currentTaskID);
+        if (currentTaskID != -5) GameManager.instance.Tasks.RemoveTask(currentTaskID);
         Status = WorkerStates.Idle;
         isReadyToWork = true;
         CheckForNeeds();
