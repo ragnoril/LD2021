@@ -20,6 +20,9 @@ public class WorkerAgent : MonoBehaviour
 
     public WorkerStates Status;
     Coroutine moveReq;
+    int currentTaskID;
+    public TaskManager Tasks;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,7 @@ public class WorkerAgent : MonoBehaviour
             Debug.Log(gameObject.name + " waiting for new job");
             // get a new job
             int taskId = GameManager.instance.Tasks.GetAvailableTask(this);
+            currentTaskID = taskId;
             if (taskId != -1)
             {
                 Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
@@ -126,7 +130,7 @@ public class WorkerAgent : MonoBehaviour
             {
                 yield return null;
             }
-            isReadyToWork = true;
+            FinishTask();
         }
     }
 
@@ -137,6 +141,12 @@ public class WorkerAgent : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, digPos, digSpeed * Time.deltaTime);
             yield return null;
         }
+        FinishTask();
+    }
+
+    void FinishTask()
+    {
+        Tasks.RemoveTask(currentTaskID);
         isReadyToWork = true;
     }
 
