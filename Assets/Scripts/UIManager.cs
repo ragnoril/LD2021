@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public Slider SliderSFX, SliderMusic;
     public GameObject ImageSFX, ImageMusic;
     public bool PointerOverUI;
+    public Text Dwarf, Food, Bed, Fun, Ore, Storage, EnergyIn, EnergyOut;
     private void Start()
     {
         
@@ -60,5 +61,21 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         PointerOverUI = true;
     }
 
+    public void UpdateStatsUI()
+    {
+        Dwarf.text = GameManager.instance.Workers.Count.ToString();
+        EnergyIn.text = GameManager.instance.GetEnergySupplyAmount().ToString();
+        EnergyOut.text = GameManager.instance.GetEnergyDrainAmount().ToString();
+        Bed.text = GameManager.instance.GetBedSupplyAmount().ToString();
+        Food.text = GameManager.instance.GetDinerCapacity().ToString();
+        Fun.text = GameManager.instance.GetEntertainmentCapacity().ToString();
+        Storage.text = GameManager.instance.GetOreStorageCapacity().ToString();
+        Ore.text = GameManager.instance.OreAmount.ToString();
+    }
+
+    public void CancelSelection()
+    {
+
+    }
 
 }
