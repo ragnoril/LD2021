@@ -4,26 +4,26 @@ using UnityEngine;
 
 public enum SoundClips
 {
-    BuildingBuilt,
-    BuildingBroken,
-    ButtonClick1,
-    ButtonClic2,
-    Digging1,
-    Digging2,
-    EnergyLow,
-    TaskAdd1,
-    TaskAdd2,
-    TaskCancel,
-    WorkerDead1,
-    WorkerDead2,
-    WorkerDead3,
-    WorkerNewTask,
-    WorkerHungry,
-    WorkerMoody1,
-    WorkerMoody2,
-    WorkerMoody3,
-    WorkerMoody4,
-    WorkerSleepy
+    BuildingBuilt,//0
+    BuildingBroken,//1
+    ButtonClick1,//2
+    ButtonClic2,//3
+    Digging1,//4
+    Digging2,//5
+    EnergyLow,//6
+    TaskAdd1,//7
+    TaskAdd2,//8
+    TaskCancel,//9
+    WorkerDead1,//10
+    WorkerDead2,//11
+    WorkerDead3,//12
+    WorkerNewTask,//13
+    WorkerHungry,//14
+    WorkerMoody1,//15
+    WorkerMoody2,//16
+    WorkerMoody3,//17
+    WorkerMoody4,//18
+    WorkerSleepy//19
 };
 
 public class SfxManager : MonoBehaviour
@@ -64,5 +64,10 @@ public class SfxManager : MonoBehaviour
     {
         Player = GetComponent<AudioSource>();
     }
+    public void SetVolume(float val)
+    {
+        Player.volume = val;
+    }
+
 
 }

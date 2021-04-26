@@ -95,7 +95,6 @@ public class TaskManager : MonoBehaviour
         task.TaskIcon.transform.SetParent(this.transform);
 
         TaskList.Add(task);
-
         return TaskList.Count - 1;
     }
 

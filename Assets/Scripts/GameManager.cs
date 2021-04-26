@@ -100,11 +100,13 @@ public class GameManager : MonoBehaviour
                 if (taskId == -1)
                 {
                     Debug.Log("new dig task added.");
+                    GameManager.instance.SfxPlayer.PlaySfx(Random.Range(7,9));
                     Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, SelectedTile);
                 }
                 else
                 {
                     Tasks.RemoveTask(taskId);
+                    GameManager.instance.SfxPlayer.PlaySfx(9);
                 }
             }
         }

@@ -76,6 +76,7 @@ public class WorkerAgent : MonoBehaviour
                     workTask = GameManager.instance.Tasks.TaskList[taskId];
                     Status = WorkerStates.Working;
                     isReadyToWork = false;
+                    GameManager.instance.SfxPlayer.PlaySfx(13);
                     StartOrUpdatePathFinding();
                 }
             }
@@ -159,12 +160,22 @@ public class WorkerAgent : MonoBehaviour
     IEnumerator Digging(Vector3 digPos)
     {
         //Debug.Log("Digging Started");
+        float i = 0;
+        bool played = false;
+        GameManager.instance.SfxPlayer.PlaySfx(4);
         while (Vector3.Distance(transform.position, digPos) > 0)
         {
+            i += Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, digPos, digSpeed * Time.deltaTime);
+            if (i>1 && !played)
+            {
+                GameManager.instance.SfxPlayer.PlaySfx(4);
+                played = true;
+            }
             yield return null;
         }
         //Debug.Log("Digging Ended");
+        GameManager.instance.SfxPlayer.PlaySfx(5);
         workTask.TaskTile.Dug();
         FinishTask(currentTaskID);
     }
