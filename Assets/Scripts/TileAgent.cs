@@ -95,6 +95,7 @@ public class TileAgent : MonoBehaviour
     public void Dug()
     {
         //+ore ekle
+        GameManager.instance.OreAmount += Value;
         Destroy(gameObject);
     }
 }
