@@ -55,11 +55,11 @@ public class BuildingAgent : MonoBehaviour
         {
             if (BuildingType == 0)
             {
-                Users[i].Eat();
+                Users[i].Sleep();
             }
             else if (BuildingType == 1)
             {
-                Users[i].Sleep();
+                Users[i].Eat();
             }
             else if (BuildingType == 2)
             {
