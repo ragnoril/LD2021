@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
     Vector3 startPos, translation;
     private void Start()
     {
-        //ResolutionAdjust();
+        ResolutionAdjust();
     }
     void Update()
     {
