@@ -7405,7 +7405,7 @@ MonoBehaviour:
   SliderMusic: {fileID: 3515257269828638761}
   ImageSFX: {fileID: 3767980121435760826}
   ImageMusic: {fileID: 7832110950758189740}
-  GameOverPanel: {fileID: 0}
+  GameOverPanel: {fileID: 7596922550475960099}
   PointerOverUI: 0
   Dwarf: {fileID: 8762099103824622945}
   Food: {fileID: 8046967327751664644}
