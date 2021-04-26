@@ -29,6 +29,7 @@ public class DayCycleManager : MonoBehaviour
         ClockTickCounter = 0;
         PeriodCounter = 0;
         DayCounter = 0;
+        GameManager.instance.UI.UpdateDayTimeUI();
     }
 
     // Update is called once per frame
@@ -66,11 +67,13 @@ public class DayCycleManager : MonoBehaviour
             DayTicks();
             PeriodCounter = 0;
         }
+        GameManager.instance.UI.UpdateDayTimeUI();
     }
 
     void DayTicks()
     {
         OnDayComplete?.Invoke();
         DayCounter += 1;
+        GameManager.instance.UI.UpdateDayTimeUI();
     }
 }

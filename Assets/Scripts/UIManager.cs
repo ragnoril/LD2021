@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public Slider SliderSFX, SliderMusic;
     public GameObject ImageSFX, ImageMusic, GameOverPanel;
     public bool PointerOverUI;
-    public Text Dwarf, Food, Bed, Fun, Ore, Storage, EnergyIn, EnergyOut, GameOverDaysPlayed;
+    public Text Dwarf, Food, Bed, Fun, Ore, Storage, EnergyIn, EnergyOut, GameOverDaysPlayed, Day, Time;
     private void Start()
     {
 
@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     {
         GameManager.instance.GameMode = GameModes.Dig;
     }
+
+    string[] periods = new string[] { "Morning", "Noon", "Evening", "Night" };
 
     public void BuildCommand(int buildingId)
     {
@@ -92,6 +94,12 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void BackToMainMenu()
     {
 
+    }
+
+    public void UpdateDayTimeUI()
+    {
+        Day.text = GameManager.instance.DayCycle.DayCounter.ToString();
+        Time.text = periods[GameManager.instance.DayCycle.PeriodCounter];
     }
 
 }
