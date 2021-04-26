@@ -104,5 +104,8 @@ public class BuildingAgent : MonoBehaviour
     public void Use(WorkerAgent worker)
     {
         Users.Add(worker);
+        if (BuildingType == 0) worker.isResting = true;
+        else if (BuildingType == 1) worker.isEating = true;
+        else if (BuildingType == 2) worker.isDrinking = true;
     }
 }

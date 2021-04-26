@@ -14,7 +14,8 @@ public enum WorkerStates
 public class WorkerAgent : MonoBehaviour
 {
     Task workTask;
-    bool isReadyToWork, isDead;
+    bool isReadyToWork;
+    public bool isEating, isResting, isDrinking;
     public float moveSpeed, digSpeed, buildTime;
 
     public WorkerStates Status;
@@ -54,25 +55,28 @@ public class WorkerAgent : MonoBehaviour
     {
         hunger = hungerMax;
         isReadyToWork = true;
+        isEating = false;
     }
 
     public void Sleep()
     {
         energy = energyMax;
         isReadyToWork = true;
+        isResting = false;
     }
 
     public void Drink()
     {
         fun = funMax;
         isReadyToWork = true;
+        isDrinking = false;
     }
 
     void GettingTired()
     {
-        energy -= 1;
-        hunger -= 1;
-        fun -= 1;
+        if (!isResting) energy -= 1;
+        if (!isEating) hunger -= 1;
+        if (!isDrinking) fun -= 1;
 
         CheckForNeeds();
     }
