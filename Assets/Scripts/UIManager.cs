@@ -93,7 +93,7 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void BackToMainMenu()
     {
-
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
 
     public void UpdateDayTimeUI()
