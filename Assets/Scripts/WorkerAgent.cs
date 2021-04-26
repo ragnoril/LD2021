@@ -171,7 +171,8 @@ public class WorkerAgent : MonoBehaviour
 
     void FinishTask(int currentTaskID)
     {
-        GameManager.instance.Tasks.RemoveTask(currentTaskID);
+        //GameManager.instance.Tasks.RemoveTask(currentTaskID);
+        GameManager.instance.Tasks.RemoveTask(workTask);
         Status = WorkerStates.Idle;
         isReadyToWork = true;
         //CheckForNeeds();

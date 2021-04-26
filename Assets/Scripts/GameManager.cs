@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     public TaskManager Tasks;
     public DayCycleManager DayCycle;
 
-    public GameObject WorkerPrefab;
+    public GameObject[] WorkerPrefabs;
 
     public List<WorkerAgent> Workers;
     public int StartingWorkerCount;
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         Workers = new List<WorkerAgent>();
         for (int i = 0; i < StartingWorkerCount; i++)
         {
-            GameObject go = GameObject.Instantiate(WorkerPrefab, new Vector3(3f+i, 0f, 0), Quaternion.identity);
+            GameObject go = GameObject.Instantiate(WorkerPrefabs[Random.Range(0, WorkerPrefabs.Length)], new Vector3(3f+i, 0f, 0), Quaternion.identity);
             go.transform.SetParent(this.transform);
 
             go.name = "Worker_" + i.ToString();
@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
                 {
                     var layerMask = LayerMask.GetMask("Worker");
                     layerMask = ~layerMask;
-                    if (Physics.Raycast(new Ray(new Vector3(i, -j, -1f), new Vector3(0, 0, 3f)),999f, layerMask))
+                    if (Physics.Raycast(new Ray(new Vector3(i, -j, -1f), new Vector3(0, 0, 3f)), 999f, layerMask))
                     {
                         updatedList.Add(0);
                     }

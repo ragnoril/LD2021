@@ -27,27 +27,29 @@ public class Task
     {
         // if building check if we have enough resources
         //
+        var layerMask = LayerMask.GetMask("Worker");
+        layerMask = ~layerMask;
 
         // for dig or building
-        if (!Physics.Raycast(new Ray(new Vector3(X - 1, -Y, -1f), new Vector3(0, 0, 3f))))
+        if (!Physics.Raycast(new Ray(new Vector3(X - 1, -Y, -1f), new Vector3(0, 0, 3f)), 999f, layerMask))
         {
             //Debug.Log("west of it empty");
             return true;
         }
 
-        if (!Physics.Raycast(new Ray(new Vector3(X + 1, -Y, -1f), new Vector3(0, 0, 3f))))
+        if (!Physics.Raycast(new Ray(new Vector3(X + 1, -Y, -1f), new Vector3(0, 0, 3f)), 999f, layerMask))
         {
             //Debug.Log("east of it empty");
             return true;
         }
 
-        if (!Physics.Raycast(new Ray(new Vector3(X, -(Y - 1), -1f), new Vector3(0, 0, 3f))))
+        if (!Physics.Raycast(new Ray(new Vector3(X, -(Y - 1), -1f), new Vector3(0, 0, 3f)), 999f, layerMask))
         {
             //Debug.Log("south of it empty");
             return true;
         }
 
-        if (!Physics.Raycast(new Ray(new Vector3(X, -(Y + 1), -1f), new Vector3(0, 0, 3f))))
+        if (!Physics.Raycast(new Ray(new Vector3(X, -(Y + 1), -1f), new Vector3(0, 0, 3f)), 999f, layerMask))
         {
             //Debug.Log("north of it empty");
             return true;
@@ -124,7 +126,23 @@ public class TaskManager : MonoBehaviour
 
     public void RemoveTask(int id)
     {
-        //TaskList[id].Claimant 
+        if (TaskList[id].Claimant != null)
+        {
+            TaskList[id].Claimant.Status = WorkerStates.Idle;
+        }
+        Destroy(TaskList[id].TaskIcon);
+        TaskList.RemoveAt(id);
+    }
+
+    public void RemoveTask(Task task)
+    {
+        int id = TaskList.IndexOf(task);
+        
+        if (TaskList[id].Claimant != null)
+        {
+            TaskList[id].Claimant.Status = WorkerStates.Idle;
+        }
+
         Destroy(TaskList[id].TaskIcon);
         TaskList.RemoveAt(id);
     }

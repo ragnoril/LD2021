@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2411239140881402235
 Transform:
@@ -43,6 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46eaa4536fbdc7d4f836c0c6a688bdb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TilePrefab: {fileID: 5844374951606753772, guid: 4e5da4a1cbb2fd74abb928d0cb5936df, type: 3}
-  Width: 20
-  Height: 50
+  TilePrefabs:
+  - {fileID: 5844374951606753772, guid: 4e5da4a1cbb2fd74abb928d0cb5936df, type: 3}
+  - {fileID: 5844374951606753772, guid: b4013f9526dfa464283e3e69af4fa7ed, type: 3}
+  - {fileID: 5844374951606753772, guid: 466ea8dfd470a3843b3e67c110f90efd, type: 3}
+  - {fileID: 5844374951606753772, guid: a1ff4585d4f01064ca359b72e6bdf80a, type: 3}
+  - {fileID: 5844374951606753772, guid: 6a208c322bf3a2041aeb13e2d86071b7, type: 3}
+  - {fileID: 5844374951606753772, guid: 1b139b8578e66404ea3676fea03d17e1, type: 3}
+  Width: 50
+  Height: 100
