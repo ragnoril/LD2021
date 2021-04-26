@@ -479,4 +479,15 @@ public class GameManager : MonoBehaviour
         return agent;
     }
 
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        UI.ShowGameOverPanel();
+    }
+
+    public void NewGame()
+    {
+
+    }
+
 }
