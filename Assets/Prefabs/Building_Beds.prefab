@@ -49,7 +49,7 @@ MonoBehaviour:
   BuiltCost: 10
   BuildingType: 0
   EnergyCost: 1
-  Value: 0
+  Value: 5
   IsWorking: 0
 --- !u!65 &6908735779820097846
 BoxCollider:

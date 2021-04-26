@@ -48,8 +48,8 @@ MonoBehaviour:
   BuildingWidth: 2
   BuiltCost: 10
   BuildingType: 2
-  EnergyCost: 1
-  Value: 0
+  EnergyCost: 2
+  Value: 5
   IsWorking: 0
 --- !u!65 &5362805738725764995
 BoxCollider:

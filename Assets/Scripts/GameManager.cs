@@ -323,4 +323,48 @@ public class GameManager : MonoBehaviour
 
         return amount;
     }
+
+    public int GetDinerCapacity()
+    {
+        int amount = 0;
+        foreach (BuildingAgent building in BuildingList)
+        {
+            if (building.BuildingType == 1)
+            {
+                amount += building.Value;
+            }
+        }
+
+        return amount;
+    }
+
+    public int GetEntertainmentCapacity()
+    {
+        int amount = 0;
+        foreach (BuildingAgent building in BuildingList)
+        {
+            if (building.BuildingType == 2)
+            {
+                amount += building.Value;
+            }
+        }
+
+        return amount;
+    }
+
+    public int GetOreStorageCapacity()
+    {
+        int amount = 0;
+        foreach (BuildingAgent building in BuildingList)
+        {
+            if (building.BuildingType == 4)
+            {
+                amount += building.Value;
+            }
+        }
+
+        return amount;
+    }
+
+
 }
