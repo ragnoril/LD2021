@@ -354,7 +354,7 @@ public class GameManager : MonoBehaviour
 
     public int GetOreStorageCapacity()
     {
-        int amount = 0;
+        int amount = 200;
         foreach (BuildingAgent building in BuildingList)
         {
             if (building.BuildingType == 4)
