@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,12 +24,17 @@ public class WorkerAgent : MonoBehaviour
 
     public int energy, fun, hunger;
     public int energyThreshold, funThreshold, hungerThreshold;
+    public int energyMax, funMax, hungerMax;
 
     // Start is called before the first frame update
     void Start()
     {
         Status = WorkerStates.Idle;
         isReadyToWork = true;
+
+        energy = energyMax;
+        fun = funMax;
+        hunger = hungerMax;
 
         GameManager.instance.DayCycle.OnPeriodComplete += GettingTired;
     }
@@ -44,6 +50,24 @@ public class WorkerAgent : MonoBehaviour
         DoAI(Time.deltaTime);
     }
 
+    public void Eat()
+    {
+        hunger = hungerMax;
+        isReadyToWork = true;
+    }
+
+    public void Sleep()
+    {
+        energy = energyMax;
+        isReadyToWork = true;
+    }
+
+    public void Drink()
+    {
+        fun = funMax;
+        isReadyToWork = true;
+    }
+
     void GettingTired()
     {
         energy -= 1;
@@ -57,7 +81,7 @@ public class WorkerAgent : MonoBehaviour
     {
         if (Status == WorkerStates.Needy)
         {
-
+            SatisfyNeeds();
         }
         else if (Status == WorkerStates.Idle)
         {
@@ -98,6 +122,51 @@ public class WorkerAgent : MonoBehaviour
         moveReq = StartCoroutine(Move(GameManager.instance.StartPathFinding(sX, sY, workTask.X, workTask.Y)));
     }
 
+    void GoSatisfy(BuildingAgent building)
+    {
+        int sX = Mathf.FloorToInt(transform.position.x);
+        int sY = -Mathf.FloorToInt(transform.position.y);
+
+        int gX = Mathf.FloorToInt(building.transform.position.x);
+        int gY = -Mathf.FloorToInt(building.transform.position.y);
+
+        StartCoroutine(MoveForNeeds(GameManager.instance.StartPathFinding(sX, sY, gX, gY), building));
+    }
+
+    void SatisfyNeeds()
+    {
+        if (hunger <= hungerThreshold)
+        {
+            BuildingAgent building = GameManager.instance.GetNearestDiner(this.transform.position);
+            if (building != null)
+            {
+                isReadyToWork = false;
+                Status = WorkerStates.Working;
+                GoSatisfy(building);
+            }
+        }
+        else if (energy <= energyThreshold)
+        {
+            BuildingAgent building = GameManager.instance.GetNearestBed(this.transform.position);
+            if (building != null)
+            {
+                isReadyToWork = false;
+                Status = WorkerStates.Working;
+                GoSatisfy(building);
+            }
+        }
+        else if (fun <= funThreshold)
+        {
+            BuildingAgent building = GameManager.instance.GetNearestPub(this.transform.position);
+            if (building != null)
+            {
+                isReadyToWork = false;
+                Status = WorkerStates.Working;
+                GoSatisfy(building);
+            }
+        }
+    }
+
     void CheckForNeeds()
     {
         if (hunger <= hungerThreshold)
@@ -119,7 +188,33 @@ public class WorkerAgent : MonoBehaviour
         if (hunger == 0 || energy == 0)
         {
             //worker dead
+            KillMe();
         }
+    }
+
+    void KillMe()
+    {
+        GameManager.instance.Workers.Remove(this);
+        GameManager.instance.UI.UpdateStatsUI();
+        Destroy(gameObject);
+    }
+
+    IEnumerator MoveForNeeds(List<Vector3> path, BuildingAgent building)
+    {
+        foreach (Vector3 pos in path)
+        {
+            while (Vector3.Distance(transform.position, pos) > 0)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, pos, moveSpeed * Time.deltaTime);
+                yield return null;
+            }
+        }
+
+        if (building.Users.Count < building.Value)
+            building.Use(this);
+        else
+            Status = WorkerStates.Needy;
+
     }
 
     IEnumerator Move(List<Vector3> path)

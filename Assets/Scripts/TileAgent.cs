@@ -97,6 +97,7 @@ public class TileAgent : MonoBehaviour
         //+ore ekle
         GameManager.instance.OreAmount += Value;
         GameManager.instance.OreAmount = Mathf.Min(GameManager.instance.OreAmount, GameManager.instance.GetOreStorageCapacity());
+        GameManager.instance.UI.UpdateStatsUI();
         Destroy(gameObject);
     }
 }

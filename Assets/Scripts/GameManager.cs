@@ -92,6 +92,8 @@ public class GameManager : MonoBehaviour
         CreateWorkers();
 
         DayCycle.IsRunning = true;
+
+        UI.UpdateStatsUI();
     }
 
     // Update is called once per frame
@@ -195,6 +197,8 @@ public class GameManager : MonoBehaviour
         building.transform.localPosition = new Vector3(x, -y, 0f);
         building.BuildIt();
         BuildingList.Add(building);
+
+        UI.UpdateStatsUI();
     }
 
     public void PrepareBuilding(int buildingId)
@@ -366,5 +370,79 @@ public class GameManager : MonoBehaviour
         return amount;
     }
 
+    public BuildingAgent GetNearestDiner(Vector3 pos)
+    {
+        BuildingAgent agent = null;
+        float dist = 99999f;
+
+        //Vector3 pos = new Vector3(x, y, 0f);
+
+        foreach (BuildingAgent building in BuildingList)
+        {
+            if (building.BuildingType == 1)
+            {
+                if (Mathf.Abs(Vector3.Distance(building.transform.position, pos)) < dist)
+                {
+                    if (building.Users.Count < building.Value)
+                    {
+                        dist = Mathf.Abs(Vector3.Distance(building.transform.position, pos));
+                        agent = building;
+                    }
+                }
+            }
+        }
+
+        return agent;
+    }
+
+    public BuildingAgent GetNearestBed(Vector3 pos)
+    {
+        BuildingAgent agent = null;
+        float dist = 99999f;
+
+        //Vector3 pos = new Vector3(x, y, 0f);
+
+        foreach (BuildingAgent building in BuildingList)
+        {
+            if (building.BuildingType == 0)
+            {
+                if (Mathf.Abs(Vector3.Distance(building.transform.position, pos)) < dist)
+                {
+                    if (building.Users.Count < building.Value)
+                    {
+                        dist = Mathf.Abs(Vector3.Distance(building.transform.position, pos));
+                        agent = building;
+                    }
+                }
+            }
+        }
+
+        return agent;
+    }
+
+    public BuildingAgent GetNearestPub(Vector3 pos)
+    {
+        BuildingAgent agent = null;
+        float dist = 99999f;
+
+        //Vector3 pos = new Vector3(x, y, 0f);
+
+        foreach (BuildingAgent building in BuildingList)
+        {
+            if (building.BuildingType == 2)
+            {
+                if (Mathf.Abs(Vector3.Distance(building.transform.position, pos)) < dist)
+                {
+                    if (building.Users.Count < building.Value)
+                    {
+                        dist = Mathf.Abs(Vector3.Distance(building.transform.position, pos));
+                        agent = building;
+                    }
+                }
+            }
+        }
+
+        return agent;
+    }
 
 }

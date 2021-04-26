@@ -12,16 +12,23 @@ public class BuildingAgent : MonoBehaviour
     public int Value;
     public bool IsWorking;
 
+    public List<WorkerAgent> Users;
+
     // Start is called before the first frame update
     void Start()
     {
         IsWorking = false;
+        Users = new List<WorkerAgent>();
     }
 
     public void BuildIt()
     {
         GameManager.instance.DayCycle.OnPeriodComplete += EnergyCheck;
-        IsWorking = true;
+
+        if (GameManager.instance.GetEnergyDrainAmount() > GameManager.instance.GetEnergySupplyAmount())
+            IsWorking = false;
+        else
+            IsWorking = true;
     }
 
     private void OnDestroy()
@@ -31,7 +38,36 @@ public class BuildingAgent : MonoBehaviour
 
     void EnergyCheck()
     {
+        if (IsWorking)
+        {
+            WorkIt();
+        }
+        else
+        {
+            if (GameManager.instance.GetEnergyDrainAmount() <= GameManager.instance.GetEnergySupplyAmount())
+                IsWorking = true;
+        }
+    }
 
+    void WorkIt()
+    {
+        for (int i = 0; i < Users.Count; i++)
+        {
+            if (BuildingType == 0)
+            {
+                Users[i].Eat();
+            }
+            else if (BuildingType == 1)
+            {
+                Users[i].Sleep();
+            }
+            else if (BuildingType == 2)
+            {
+                Users[i].Drink();
+            }
+        }
+
+        Users.Clear();
     }
 
     // Update is called once per frame
@@ -63,5 +99,10 @@ public class BuildingAgent : MonoBehaviour
         //Debug.Log("no hit");
         collider.enabled = true;
         return true;
+    }
+
+    public void Use(WorkerAgent worker)
+    {
+        Users.Add(worker);
     }
 }

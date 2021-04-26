@@ -54,6 +54,9 @@ MonoBehaviour:
   energyThreshold: 3
   funThreshold: 2
   hungerThreshold: 3
+  energyMax: 12
+  funMax: 24
+  hungerMax: 6
 --- !u!1001 &6948395958477053553
 PrefabInstance:
   m_ObjectHideFlags: 0
