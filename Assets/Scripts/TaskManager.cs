@@ -127,8 +127,8 @@ public class TaskManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (GameManager.instance.DayCycle != null)
-            GameManager.instance.DayCycle.OnClockTicks -= AssignTasks;
+        //if (GameManager.instance.DayCycle != null)
+        //    GameManager.instance.DayCycle.OnClockTicks -= AssignTasks;
     }
 
     void AssignTasks()
