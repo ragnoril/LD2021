@@ -6,7 +6,6 @@ public enum WorkerStates
 {
     Idle,
     Working,
-    Moving,
     Needy,
     TotalCount
 };
@@ -24,13 +23,12 @@ public class WorkerAgent : MonoBehaviour
 
     public int energy, fun, hunger;
     public int energyThreshold, funThreshold, hungerThreshold;
-    float needCheckCounter;
 
     // Start is called before the first frame update
     void Start()
     {
         Status = WorkerStates.Idle;
-        isReadyToWork = false;
+        isReadyToWork = true;
 
         GameManager.instance.DayCycle.OnPeriodComplete += GettingTired;
     }
@@ -51,17 +49,13 @@ public class WorkerAgent : MonoBehaviour
         energy -= 1;
         hunger -= 1;
         fun -= 1;
+
+        CheckForNeeds();
     }
 
     void DoAI(float dt)
     {
-        needCheckCounter += dt;
-        if (needCheckCounter > 1) needCheckCounter = 0;
         if (Status == WorkerStates.Needy)
-        {
-
-        }
-        else if (Status == WorkerStates.Moving)
         {
 
         }
@@ -70,36 +64,28 @@ public class WorkerAgent : MonoBehaviour
             //if (needCheckCounter == 0) CheckForNeeds();
             if (Status == WorkerStates.Idle) //if worker's still idle, check job
             {
-                bool checkTask = true;
-                if (needCheckCounter == 0) checkTask = !CheckIfFloating();
-                if (checkTask)
-                {
-                    int taskId = GameManager.instance.Tasks.GetAvailableTask(this);
-                    currentTaskID = taskId;
-                    if (taskId > -1) Debug.Log(taskId);
-                    if (taskId != -1)
-                    {
-                        //Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
-                        workTask = GameManager.instance.Tasks.TaskList[taskId];
-                        Status = WorkerStates.Working;
-                        isReadyToWork = false;
-                        GameManager.instance.SfxPlayer.PlaySfx(13);
-                        StartOrUpdatePathFinding();
-                    }
-                }
-                //Debug.Log(gameObject.name + " waiting for new job");
-                // get a new job
+                GameManager.instance.Tasks.AddWorker(this);
             }
 
         }
         else if (Status == WorkerStates.Working)
         {
             if (isReadyToWork)
-            {
-                //Debug.Log(gameObject.name + " has new job");
-            }
-            //if (needCheckCounter == 0) StartOrUpdatePathFinding();
+                Status = WorkerStates.Idle;
+        }
+    }
 
+    public void AssignTask(int taskId)
+    {
+        currentTaskID = taskId;
+        if (taskId != -1)
+        {
+            //Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
+            workTask = GameManager.instance.Tasks.TaskList[taskId];
+            Status = WorkerStates.Working;
+            isReadyToWork = false;
+            GameManager.instance.SfxPlayer.PlaySfx(13);
+            StartOrUpdatePathFinding();
         }
     }
 
@@ -111,22 +97,28 @@ public class WorkerAgent : MonoBehaviour
         Debug.Log("current Pos:"+sX + "," + sY + "\n Target Pos:" + workTask.X + "," + workTask.Y);
         moveReq = StartCoroutine(Move(GameManager.instance.StartPathFinding(sX, sY, workTask.X, workTask.Y)));
     }
+
     void CheckForNeeds()
     {
         if (hunger <= hungerThreshold)
         {
             Status = WorkerStates.Needy;
-            isReadyToWork = false;
+            GameManager.instance.Tasks.RemoveWorker(this);
         }
         else if (energy <= energyThreshold)
         {
             Status = WorkerStates.Needy;
-            isReadyToWork = false;
+            GameManager.instance.Tasks.RemoveWorker(this);
         }
         else if (fun <= funThreshold)
         {
             Status = WorkerStates.Needy;
-            isReadyToWork = false;
+            GameManager.instance.Tasks.RemoveWorker(this);
+        }
+
+        if (hunger == 0 || energy == 0)
+        {
+            //worker dead
         }
     }
 
@@ -169,8 +161,8 @@ public class WorkerAgent : MonoBehaviour
                 workTask.Claimant = null;
                 workTask.Status = 0;
                 workTask = null;
-                Status = WorkerStates.Idle;
-                isReadyToWork = true;
+                if (!CheckIfFloating())
+                    isReadyToWork = true;
             }
             float timer = 0;
             while (timer<buildTime)
@@ -216,9 +208,11 @@ public class WorkerAgent : MonoBehaviour
     {
         //GameManager.instance.Tasks.RemoveTask(currentTaskID);
         GameManager.instance.Tasks.RemoveTask(workTask);
-        Status = WorkerStates.Idle;
+        //Status = WorkerStates.Idle;
         isReadyToWork = true;
         //CheckForNeeds();
+        if (!CheckIfFloating())
+            isReadyToWork = true;
     }
 
     bool CheckIfFloating()
@@ -228,7 +222,6 @@ public class WorkerAgent : MonoBehaviour
         {
             if (Vector3.Distance(transform.position, hit.transform.position) > 1)
             {
-                Status = WorkerStates.Moving;
                 StartCoroutine(MoveFloating(hit.transform.position + Vector3.up));
                 return true;
             }
@@ -243,6 +236,6 @@ public class WorkerAgent : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, pos, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        Status = WorkerStates.Idle;
+        isReadyToWork = true;
     }
 }
