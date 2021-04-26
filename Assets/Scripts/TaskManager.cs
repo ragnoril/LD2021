@@ -65,6 +65,7 @@ public class TaskManager : MonoBehaviour
 {
     public List<Task> TaskList = new List<Task>();
     public GameObject TaskIconPrefab;
+    public GameObject[] TaskBuildingIconPrefabs;
 
     public int AddNewTask(int x, int y, int type, TileAgent tile)
     {
@@ -91,7 +92,10 @@ public class TaskManager : MonoBehaviour
         task.Type = type;
         task.Value = value;
         task.Status = 0;
-        task.TaskIcon = GameObject.Instantiate(TaskIconPrefab, new Vector3(x, -y, 0f), Quaternion.identity);
+        if (type == 0)
+            task.TaskIcon = GameObject.Instantiate(TaskIconPrefab, new Vector3(x, -y, 0f), Quaternion.identity);
+        else
+            task.TaskIcon = GameObject.Instantiate(TaskBuildingIconPrefabs[value], new Vector3(x, -y, 0f), Quaternion.identity);
         task.TaskIcon.transform.SetParent(this.transform);
 
         TaskList.Add(task);

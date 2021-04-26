@@ -58,3 +58,14 @@ MonoBehaviour:
   StartingWorkerCount: 5
   GameMode: 0
   SelectedTile: {fileID: 0}
+  BuildingPrefabs:
+  - {fileID: 7544217709142281948, guid: 87389c74b2dabfd44a61ed94773ee889, type: 3}
+  - {fileID: 6078936931722123436, guid: d9485acde5778e74d88f14db15efbfaa, type: 3}
+  - {fileID: 2757812613212811718, guid: b05f416ecee91e1478091f0dfc647888, type: 3}
+  - {fileID: 6837108043260752295, guid: ea4d4226fc646024384e4573cf649e24, type: 3}
+  - {fileID: 2530283341002395135, guid: 105da1e149968834c97c3e1155c4d181, type: 3}
+  SelectedBuildingId: 0
+  TempPlacementBuilding: {fileID: 0}
+  BuildingPlacementPosition: {x: 0, y: 0}
+  BuildingList: []
+  OreAmount: 100

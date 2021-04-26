@@ -102,7 +102,7 @@ MonoBehaviour:
   MaximumY: 3
   MinimumZ: -15
   MaximumZ: -5
-  ScreenDeltaX: 30
-  ScreenDeltaY: 30
+  ScreenDeltaX: 100
+  ScreenDeltaY: 100
   CameraMoveSpeed: 5
   CameraZoomSpeed: 50

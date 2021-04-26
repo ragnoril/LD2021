@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TaskIconPrefab: {fileID: 1148915860237688863, guid: 16fb95747eb7f3043b4daa2463113d6b, type: 3}
+  TaskBuildingIconPrefabs:
+  - {fileID: 1793964745746282631, guid: 5e0edecae7cd73a49bb2cc0e60a88e8a, type: 3}
+  - {fileID: 1793964745746282631, guid: 5e0edecae7cd73a49bb2cc0e60a88e8a, type: 3}
+  - {fileID: 1793964745746282631, guid: 5e0edecae7cd73a49bb2cc0e60a88e8a, type: 3}
+  - {fileID: 5353780713542107162, guid: bb86f78cb63e2814ba9ce626c6eda433, type: 3}
+  - {fileID: 2702675901556207343, guid: a26e8eb5f2bad494fa1c644830d0e247, type: 3}

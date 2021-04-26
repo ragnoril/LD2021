@@ -50,6 +50,15 @@ public class TileAgent : MonoBehaviour
 
     public bool CheckIfAvailable()
     {
+        var layerMask = LayerMask.GetMask("Building");
+        if (Physics.Raycast(new Ray(new Vector3(X, -(Y - 1), -1f), new Vector3(0, 0, 3f)), 999f, layerMask))
+        {
+            return false;
+        }
+
+        return true;
+
+        /*
         var layerMask = LayerMask.GetMask("Worker");
         layerMask = ~layerMask;
 
@@ -80,6 +89,7 @@ public class TileAgent : MonoBehaviour
         //Debug.Log("no empty");
 
         return false;
+        */
     }
 
     public void Dug()

@@ -381,18 +381,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6910366174056587661, guid: b3984e13c653c0a419d83760269163ca, type: 3}
-      propertyPath: WaitTime
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6910366174056587661, guid: b3984e13c653c0a419d83760269163ca, type: 3}
-      propertyPath: IsPlaying
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6910366174056587661, guid: b3984e13c653c0a419d83760269163ca, type: 3}
-      propertyPath: PlayRandom
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3984e13c653c0a419d83760269163ca, type: 3}
 --- !u!1001 &3970031944941626572
@@ -533,15 +521,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2735477593941354362, guid: ec6902a3d53b9ca4dba0c43471abf315, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.3311837
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2735477593941354362, guid: ec6902a3d53b9ca4dba0c43471abf315, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.9717143
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2735477593941354362, guid: ec6902a3d53b9ca4dba0c43471abf315, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.2849145
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2735477593941354362, guid: ec6902a3d53b9ca4dba0c43471abf315, type: 3}
       propertyPath: m_LocalRotation.w
@@ -584,22 +572,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1902499504572933392, guid: c257d8214f53c6f4eb3d748a2e26d68a, type: 3}
-      propertyPath: m_Name
-      value: Building1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3666732839252265975, guid: c257d8214f53c6f4eb3d748a2e26d68a, type: 3}
-      propertyPath: m_Name
-      value: Building2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3672738498761386407, guid: c257d8214f53c6f4eb3d748a2e26d68a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4496925941284912954, guid: c257d8214f53c6f4eb3d748a2e26d68a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7760259286992850163, guid: c257d8214f53c6f4eb3d748a2e26d68a, type: 3}
       propertyPath: m_Pivot.x
       value: 0

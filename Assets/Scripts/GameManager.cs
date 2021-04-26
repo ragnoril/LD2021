@@ -10,6 +10,17 @@ public enum GameModes
     TotalCount
 };
 
+
+public enum BuildingNames
+{
+    Beds = 0,
+    DiningRoom,
+    Pub,
+    Reactor,
+    Storage,
+    TotalCount
+};
+
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
@@ -57,6 +68,15 @@ public class GameManager : MonoBehaviour
     public GameModes GameMode;
     public TileAgent SelectedTile;
 
+    public GameObject[] BuildingPrefabs;
+    public int SelectedBuildingId;
+    public BuildingAgent TempPlacementBuilding;
+    public Vector2 BuildingPlacementPosition;
+
+    public List<BuildingAgent> BuildingList;
+
+    public int OreAmount;
+
     public AStar PathFinder;
 
     // Start is called before the first frame update
@@ -68,6 +88,7 @@ public class GameManager : MonoBehaviour
         PathFinder.isDiagonalMovementAllowed = false;
         PathFinder.isNodeCostEnabled = false;
 
+        BuildingList = new List<BuildingAgent>();
         CreateWorkers();
 
         DayCycle.IsRunning = true;
@@ -76,6 +97,26 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (GameMode == GameModes.Build)
+        {
+            if (TempPlacementBuilding != null)
+            {
+                Vector3 screenPosition = Input.mousePosition;
+                screenPosition.z = 10f; // Camera.main.transform.position.y - TempPlacementBuilding.transform.position.y;
+
+                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);// - Camera.main.transform.position;
+                //transform.position = worldPosition;
+                //worldPosition.y -= Camera.main.transform.position.y;
+                worldPosition.z = 0f;
+
+                BuildingPlacementPosition = new Vector2(Mathf.Round(worldPosition.x), Mathf.Floor(worldPosition.y));
+                TempPlacementBuilding.transform.localPosition = new Vector3(BuildingPlacementPosition.x, BuildingPlacementPosition.y, 0f);
+                
+                //Debug.Log("pso: " + worldPosition);
+            }
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             if (GameMode == GameModes.Dig)
@@ -87,6 +128,9 @@ public class GameManager : MonoBehaviour
                 BuildAction();
             }
         }
+
+            
+        
     }
 
     void DigAction()
@@ -94,7 +138,7 @@ public class GameManager : MonoBehaviour
         if (SelectedTile != null)
         {
             // check if there is a building above selected tile
-            //if (SelectedTile.CheckIfAvailable())
+            if (SelectedTile.CheckIfAvailable())
             {
                 int taskId = Tasks.CheckTaskListForDuplicate(SelectedTile.X, SelectedTile.Y, 0, 0);
                 if (taskId == -1)
@@ -114,8 +158,51 @@ public class GameManager : MonoBehaviour
 
     void BuildAction()
     {
-
+        if (TempPlacementBuilding != null)
+        {
+            if (OreAmount >= TempPlacementBuilding.BuiltCost)
+            {
+                if (TempPlacementBuilding.CheckIfAvailable())
+                {
+                    int taskId = Tasks.CheckTaskListForDuplicate((int)BuildingPlacementPosition.x, -(int)BuildingPlacementPosition.y, 1, SelectedBuildingId);
+                    if (taskId == -1)
+                    {
+                        //Debug.Log("new dig task added.");
+                        GameManager.instance.SfxPlayer.PlaySfx(Random.Range(7, 9));
+                        Tasks.AddNewTask((int)BuildingPlacementPosition.x, -(int)BuildingPlacementPosition.y, 1, SelectedBuildingId);
+                        CleanTempBuilding();
+                    }
+                }
+                else
+                {
+                    //Debug.Log("not empty");
+                    CleanTempBuilding();
+                }
+            }
+            else 
+            {
+                //Debug.Log("no money");
+                CleanTempBuilding();
+            }
+        }
     }
+
+
+    public void PrepareBuilding(int buildingId)
+    {
+        GameObject go = GameObject.Instantiate(BuildingPrefabs[buildingId]);
+        TempPlacementBuilding = go.GetComponent<BuildingAgent>();
+        TempPlacementBuilding.transform.SetParent(this.transform);
+        SelectedBuildingId = buildingId;
+    }
+
+    public void CleanTempBuilding()
+    {
+        Destroy(TempPlacementBuilding.gameObject);
+        TempPlacementBuilding = null;
+        SelectedBuildingId = -1;
+    }
+
 
     void CreateWorkers()
     {
@@ -146,7 +233,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    var layerMask = LayerMask.GetMask("Worker");
+                    var layerMask = LayerMask.GetMask("Worker") | LayerMask.GetMask("Building");
                     layerMask = ~layerMask;
                     if (Physics.Raycast(new Ray(new Vector3(i, -j, -1f), new Vector3(0, 0, 3f)), 999f, layerMask))
                     {

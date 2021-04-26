@@ -18,9 +18,10 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         GameManager.instance.GameMode = GameModes.Dig;
     }
 
-    public void BuildCommand()
+    public void BuildCommand(int buildingId)
     {
         GameManager.instance.GameMode = GameModes.Build;
+        GameManager.instance.PrepareBuilding(buildingId);
     }
 
     public void SFXMuteCommand()
