@@ -284,4 +284,43 @@ public class GameManager : MonoBehaviour
 
         return GeneratePath();
     }
+
+    public int GetEnergySupplyAmount()
+    {
+        int amount = 0;
+        foreach(BuildingAgent building in BuildingList)
+        {
+            if (building.BuildingType == 3)
+            {
+                amount += building.Value;
+            }
+        }
+
+        return amount;
+    }
+
+    public int GetEnergyDrainAmount()
+    {
+        int amount = 0;
+        foreach (BuildingAgent building in BuildingList)
+        {
+            amount += building.EnergyCost;
+        }
+
+        return amount;
+    }
+
+    public int GetBedSupplyAmount()
+    {
+        int amount = 0;
+        foreach (BuildingAgent building in BuildingList)
+        {
+            if (building.BuildingType == 0)
+            {
+                amount += building.Value;
+            }
+        }
+
+        return amount;
+    }
 }
