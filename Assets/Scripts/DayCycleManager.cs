@@ -52,8 +52,8 @@ public class DayCycleManager : MonoBehaviour
         ClockTickCounter += 1;
         if (ClockTickCounter == PeriodTimer)
         {
-            PeriodTicks();
             ClockTickCounter = 0;
+            PeriodTicks();
         }
     }
 
@@ -64,8 +64,8 @@ public class DayCycleManager : MonoBehaviour
         PeriodCounter += 1;
         if (PeriodCounter == DayTimer)
         {
-            DayTicks();
             PeriodCounter = 0;
+            DayTicks();
         }
         GameManager.instance.UI.UpdateDayTimeUI();
     }
