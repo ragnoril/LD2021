@@ -7,12 +7,12 @@ using UnityEngine.EventSystems;
 public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Slider SliderSFX, SliderMusic;
-    public GameObject ImageSFX, ImageMusic;
+    public GameObject ImageSFX, ImageMusic, GameOverPanel;
     public bool PointerOverUI;
-    public Text Dwarf, Food, Bed, Fun, Ore, Storage, EnergyIn, EnergyOut;
+    public Text Dwarf, Food, Bed, Fun, Ore, Storage, EnergyIn, EnergyOut, GameOverDaysPlayed;
     private void Start()
     {
-        
+
     }
     public void DigCommand()
     {
@@ -83,4 +83,14 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         GameManager.instance.CreateWorkers(1);
     }
 
+    public void ShowGameOverPanel()
+    {
+        GameOverDaysPlayed.text = GameManager.instance.DayCycle.DayCounter.ToString();
+        GameOverPanel.SetActive(true);
+    }
+
+    public void BackToMainMenu()
+    {
+
+    }
 }
