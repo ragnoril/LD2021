@@ -7,6 +7,7 @@ public enum GameModes
 {
     Dig = 0,
     Build,
+    Cancel,
     TotalCount
 };
 
@@ -132,10 +133,33 @@ public class GameManager : MonoBehaviour
             {
                 BuildAction();
             }
+            else if (GameMode == GameModes.Cancel)
+            {
+                CancelAction();
+            }
         }
+    }
 
-            
-        
+    void CancelAction()
+    {
+        Vector3 screenPosition = Input.mousePosition;
+        screenPosition.z = 10f; 
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+        worldPosition.z = 0f;
+
+        Vector2 pos = new Vector2(Mathf.Round(worldPosition.x), Mathf.Floor(worldPosition.y));
+
+        int taskId = Tasks.GetTaskAtXY((int)pos.x, -(int)pos.y);
+        if (taskId != -1)
+        {
+            if (Tasks.TaskList[taskId].Status == 1)
+            {
+                Tasks.TaskList[taskId].Claimant.ForgetTask();
+            }
+
+            Tasks.RemoveTask(taskId);
+            SfxPlayer.PlaySfx(9);
+        }
     }
 
     void DigAction()
@@ -154,8 +178,8 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    Tasks.RemoveTask(taskId);
-                    SfxPlayer.PlaySfx(9);
+                    //Tasks.RemoveTask(taskId);
+                    //SfxPlayer.PlaySfx(9);
                 }
             }
         }

@@ -190,6 +190,16 @@ public class TaskManager : MonoBehaviour
         return TaskList.Count - 1;
     }
 
+    public int GetTaskAtXY(int x, int y)
+    {
+        for (int i = 0; i < TaskList.Count; i++)
+        {
+            if (TaskList[i].X == x && TaskList[i].Y == y)
+                return i;
+        }
+        return -1;
+    }
+
     public int CheckTaskListForDuplicate(int x, int y, int type, int value)
     {
         for (int i = 0; i < TaskList.Count; i++)
@@ -228,14 +238,16 @@ public class TaskManager : MonoBehaviour
     public void RemoveTask(Task task)
     {
         int id = TaskList.IndexOf(task);
-        
-        if (TaskList[id].Claimant != null)
+        if (TaskList[id] != null)
         {
-            TaskList[id].Claimant.Status = WorkerStates.Idle;
-        }
+            if (TaskList[id].Claimant != null)
+            {
+                TaskList[id].Claimant.Status = WorkerStates.Idle;
+            }
 
-        Destroy(TaskList[id].TaskIcon);
-        TaskList.RemoveAt(id);
+            Destroy(TaskList[id].TaskIcon);
+            TaskList.RemoveAt(id);
+        }
     }
 
     public void AddWorker(WorkerAgent workerAgent)

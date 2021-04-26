@@ -334,4 +334,11 @@ public class WorkerAgent : MonoBehaviour
         }
         isReadyToWork = true;
     }
+
+
+    public void ForgetTask()
+    {
+        StopAllCoroutines();
+        isReadyToWork = true;
+    }
 }

@@ -75,7 +75,7 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void CancelSelection()
     {
-
+        GameManager.instance.GameMode = GameModes.Cancel;
     }
 
     public void AddDwarf()
