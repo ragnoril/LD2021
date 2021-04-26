@@ -46,28 +46,17 @@ public class BuildingAgent : MonoBehaviour
         collider.enabled = false;
         var layerMask = LayerMask.GetMask("Worker");
         layerMask = ~layerMask;
-        RaycastHit hitInfo;
         for (int i =0; i < BuildingWidth; i++)
         {
-            if (Physics.Raycast(new Ray(new Vector3(GameManager.instance.BuildingPlacementPosition.x + i, GameManager.instance.BuildingPlacementPosition.y, -1f), new Vector3(0, 0, 3f)), out hitInfo, 999f, layerMask))
+            if (Physics.Raycast(new Ray(new Vector3(GameManager.instance.BuildingPlacementPosition.x + i, GameManager.instance.BuildingPlacementPosition.y, -1f), new Vector3(0, 0, 3f)), 999f, layerMask))
             {
-                if (hitInfo.collider != null)
+                return false;
+            }
+            else
+            {
+                if (!Physics.Raycast(new Ray(new Vector3(GameManager.instance.BuildingPlacementPosition.x + i, GameManager.instance.BuildingPlacementPosition.y - 1, -1f), new Vector3(0, 0, 3f)), 999f, layerMask))
                 {
-                    if (hitInfo.transform == this.transform)
-                    {
-                        return true;
-                        //Debug.Log("hit me");
-                    }
-                    else
-                    {
-                        //Debug.Log("hit other");
-                        return false;
-                    }
-                }
-                else
-                {
-                    //Debug.Log("hit none");
-                    return true;
+                    return false;
                 }
             }
         }
