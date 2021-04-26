@@ -24,6 +24,7 @@ public class MusicManager : MonoBehaviour
 
         _lastPlayedSongId = -1;
         GetValues();
+        GameManager.instance.UI.HandleAudioUI();
     }
 
     private void GetValues()
@@ -96,6 +97,12 @@ public class MusicManager : MonoBehaviour
     {
         Player.volume = val;
     }
+
+    public float GetVolume()
+    {
+        return Player.volume;
+    }
+
 
     public void PlayNextSong()
     {

@@ -69,5 +69,11 @@ public class SfxManager : MonoBehaviour
         Player.volume = val;
     }
 
+    public float GetVolume()
+    {
+        return Player.volume;
+    }
+
+
 
 }

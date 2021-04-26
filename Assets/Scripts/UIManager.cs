@@ -102,4 +102,12 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         Time.text = periods[GameManager.instance.DayCycle.PeriodCounter];
     }
 
+    public void HandleAudioUI()
+    {
+        ImageSFX.SetActive(!GameManager.instance.MusicPlayer.IsPlaying);
+        ImageMusic.SetActive(!GameManager.instance.SfxPlayer.IsPlaying);
+        SliderSFX.SetValueWithoutNotify(GameManager.instance.SfxPlayer.GetVolume());
+        SliderMusic.SetValueWithoutNotify(GameManager.instance.MusicPlayer.GetVolume());
+    }
+
 }
