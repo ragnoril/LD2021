@@ -8,12 +8,12 @@ public class Task
     public int Type; // 0 dig, 1 build
     public int Value; // building id
     public int Status; // 0 waiting 1 claimed
+    public int Cost;
 
     public GameObject TaskIcon;
     public WorkerAgent Claimant;
 
     public TileAgent TaskTile;
-    public GameObject BuildingPrefab;
 
     public bool IsSame(int x, int y, int type, int value)
     {
@@ -84,7 +84,7 @@ public class TaskManager : MonoBehaviour
         return TaskList.Count - 1;
     }
 
-    public int AddNewTask(int x, int y, int type, int value)
+    public int AddNewTask(int x, int y, int type, int value, int cost)
     {
         Task task = new Task();
         task.X = x;
@@ -92,11 +92,14 @@ public class TaskManager : MonoBehaviour
         task.Type = type;
         task.Value = value;
         task.Status = 0;
+        task.Cost = cost;
+
         if (type == 0)
             task.TaskIcon = GameObject.Instantiate(TaskIconPrefab, new Vector3(x, -y, 0f), Quaternion.identity);
         else
             task.TaskIcon = GameObject.Instantiate(TaskBuildingIconPrefabs[value], new Vector3(x, -y, 0f), Quaternion.identity);
         task.TaskIcon.transform.SetParent(this.transform);
+        
 
         TaskList.Add(task);
         return TaskList.Count - 1;

@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour
                     {
                         //Debug.Log("new dig task added.");
                         GameManager.instance.SfxPlayer.PlaySfx(Random.Range(7, 9));
-                        Tasks.AddNewTask((int)BuildingPlacementPosition.x, -(int)BuildingPlacementPosition.y, 1, SelectedBuildingId);
+                        Tasks.AddNewTask((int)BuildingPlacementPosition.x, -(int)BuildingPlacementPosition.y, 1, SelectedBuildingId, TempPlacementBuilding.BuiltCost);
                         CleanTempBuilding();
                     }
                 }
@@ -187,6 +187,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PlaceBuilding(int buildingId, int x, int y)
+    {
+        GameObject go = GameObject.Instantiate(BuildingPrefabs[buildingId]);
+        BuildingAgent building = go.GetComponent<BuildingAgent>();
+        building.transform.SetParent(this.transform);
+        building.transform.localPosition = new Vector3(x, -y, 0f);
+        building.BuildIt();
+        BuildingList.Add(building);
+    }
 
     public void PrepareBuilding(int buildingId)
     {

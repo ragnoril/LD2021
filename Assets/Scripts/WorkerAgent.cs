@@ -149,12 +149,34 @@ public class WorkerAgent : MonoBehaviour
         {
             //build'e basla
             //Debug.Log("Moving Ended");
+            if (GameManager.instance.OreAmount >= workTask.Cost)
+            {
+                GameManager.instance.OreAmount -= workTask.Cost;
+                StartCoroutine(Building(lastPos));
+            }
+            else
+            {
+                workTask.Claimant = null;
+                workTask.Status = 0;
+                workTask = null;
+                Status = WorkerStates.Idle;
+                isReadyToWork = true;
+            }
             float timer = 0;
             while (timer<buildTime)
             {
                 yield return null;
             }
         }
+    }
+
+    IEnumerator Building(Vector3 buildPos)
+    {
+        yield return new WaitForSeconds(buildTime);
+        GameManager.instance.SfxPlayer.PlaySfx(0);
+        GameManager.instance.PlaceBuilding(workTask.Value, workTask.X, workTask.Y);
+
+        FinishTask(currentTaskID);
     }
 
     IEnumerator Digging(Vector3 digPos)
