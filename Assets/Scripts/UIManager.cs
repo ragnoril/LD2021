@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Slider SliderSFX, SliderMusic;
     public GameObject ImageSFX, ImageMusic;
+    public bool PointerOverUI;
     private void Start()
     {
         
@@ -47,6 +49,14 @@ public class UIManager : MonoBehaviour
     public void SetSFXVolume()
     {
         GameManager.instance.SfxPlayer.SetVolume(SliderSFX.value);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        PointerOverUI = false;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        PointerOverUI = true;
     }
 
 

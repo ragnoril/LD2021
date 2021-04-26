@@ -37,10 +37,10 @@ public class CameraController : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(1)) pan = false;
 
-        if (pan) translation = ScrollMouse(startPos, Time.deltaTime);
-        translation = ScrollEdge(Time.deltaTime);
+        //if (pan) translation = ScrollMouse(startPos, Time.deltaTime);
+        if (!GameManager.instance.UI.PointerOverUI) translation = ScrollEdge(Time.deltaTime);
+        translation = ScrollKeyboard(Time.deltaTime);
         translation = Zoom(Time.deltaTime);
-
     }
 
     private void LateUpdate()
@@ -58,6 +58,27 @@ public class CameraController : MonoBehaviour
             transform.position = translation;
 
         }
+    }
+
+    Vector3 ScrollKeyboard(float dt)
+    {
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        {
+            translation += transform.right * CameraMoveSpeed * dt;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        {
+            translation -= transform.right * CameraMoveSpeed * dt;
+        }
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        {
+            translation += transform.up * CameraMoveSpeed * dt;
+        }
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+        {
+            translation -= transform.up * CameraMoveSpeed * dt;
+        }
+        return translation;
     }
 
     Vector3 ScrollMouse(Vector3 startPos, float dt)
