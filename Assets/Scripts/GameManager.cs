@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviour
         int amount = 0;
         foreach(BuildingAgent building in BuildingList)
         {
-            if (building.BuildingType == 3)
+            if (building.BuildingType == (int)BuildingNames.Reactor)
             {
                 amount += building.Value;
             }
@@ -353,7 +353,7 @@ public class GameManager : MonoBehaviour
         int amount = 0;
         foreach (BuildingAgent building in BuildingList)
         {
-            if (building.BuildingType == 0)
+            if (building.BuildingType == (int)BuildingNames.Beds)
             {
                 amount += building.Value;
             }
@@ -367,7 +367,7 @@ public class GameManager : MonoBehaviour
         int amount = 0;
         foreach (BuildingAgent building in BuildingList)
         {
-            if (building.BuildingType == 1)
+            if (building.BuildingType == (int)BuildingNames.DiningRoom)
             {
                 amount += building.Value;
             }
@@ -381,7 +381,7 @@ public class GameManager : MonoBehaviour
         int amount = 0;
         foreach (BuildingAgent building in BuildingList)
         {
-            if (building.BuildingType == 2)
+            if (building.BuildingType == (int)BuildingNames.Pub)
             {
                 amount += building.Value;
             }
@@ -395,7 +395,7 @@ public class GameManager : MonoBehaviour
         int amount = 200;
         foreach (BuildingAgent building in BuildingList)
         {
-            if (building.BuildingType == 4)
+            if (building.BuildingType == (int)BuildingNames.Storage)
             {
                 amount += building.Value;
             }
@@ -413,7 +413,7 @@ public class GameManager : MonoBehaviour
 
         foreach (BuildingAgent building in BuildingList)
         {
-            if (building.BuildingType == 1)
+            if (building.BuildingType == (int)BuildingNames.DiningRoom)
             {
                 if (Mathf.Abs(Vector3.Distance(building.transform.position, pos)) < dist)
                 {
@@ -438,7 +438,7 @@ public class GameManager : MonoBehaviour
 
         foreach (BuildingAgent building in BuildingList)
         {
-            if (building.BuildingType == 0)
+            if (building.BuildingType == (int)BuildingNames.Beds)
             {
                 if (Mathf.Abs(Vector3.Distance(building.transform.position, pos)) < dist)
                 {
@@ -463,7 +463,7 @@ public class GameManager : MonoBehaviour
 
         foreach (BuildingAgent building in BuildingList)
         {
-            if (building.BuildingType == 2)
+            if (building.BuildingType == (int)BuildingNames.Pub)
             {
                 if (Mathf.Abs(Vector3.Distance(building.transform.position, pos)) < dist)
                 {

@@ -53,15 +53,15 @@ public class BuildingAgent : MonoBehaviour
     {
         for (int i = 0; i < Users.Count; i++)
         {
-            if (BuildingType == 0)
+            if (BuildingType == (int)BuildingNames.Beds)
             {
                 Users[i].Sleep();
             }
-            else if (BuildingType == 1)
+            else if (BuildingType == (int)BuildingNames.DiningRoom)
             {
                 Users[i].Eat();
             }
-            else if (BuildingType == 2)
+            else if (BuildingType == (int)BuildingNames.Pub)
             {
                 Users[i].Drink();
             }
@@ -104,8 +104,8 @@ public class BuildingAgent : MonoBehaviour
     public void Use(WorkerAgent worker)
     {
         Users.Add(worker);
-        if (BuildingType == 0) worker.isResting = true;
-        else if (BuildingType == 1) worker.isEating = true;
-        else if (BuildingType == 2) worker.isDrinking = true;
+        if (BuildingType == (int)BuildingNames.Beds) worker.isResting = true;
+        else if (BuildingType == (int)BuildingNames.DiningRoom) worker.isEating = true;
+        else if (BuildingType == (int)BuildingNames.Pub) worker.isDrinking = true;
     }
 }

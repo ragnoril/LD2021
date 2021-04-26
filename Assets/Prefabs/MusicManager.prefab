@@ -48,7 +48,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 612d362aae20c664f84183158f0e90e3, type: 3}
   WaitTime: 0
   PlayRandom: 0
-  IsPlaying: 0
+  IsPlaying: 1
   FadeOutTime: 0
   Player: {fileID: 0}
 --- !u!82 &135523261
