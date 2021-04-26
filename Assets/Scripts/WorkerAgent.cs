@@ -6,6 +6,7 @@ public enum WorkerStates
 {
     Idle,
     Working,
+    Moving,
     Needy,
     TotalCount
 };
@@ -60,25 +61,34 @@ public class WorkerAgent : MonoBehaviour
         {
 
         }
+        else if (Status == WorkerStates.Moving)
+        {
+
+        }
         else if (Status == WorkerStates.Idle)
         {
             //if (needCheckCounter == 0) CheckForNeeds();
             if (Status == WorkerStates.Idle) //if worker's still idle, check job
             {
+                bool checkTask = true;
+                if (needCheckCounter == 0) checkTask = !CheckIfFloating();
+                if (checkTask)
+                {
+                    int taskId = GameManager.instance.Tasks.GetAvailableTask(this);
+                    currentTaskID = taskId;
+                    if (taskId > -1) Debug.Log(taskId);
+                    if (taskId != -1)
+                    {
+                        //Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
+                        workTask = GameManager.instance.Tasks.TaskList[taskId];
+                        Status = WorkerStates.Working;
+                        isReadyToWork = false;
+                        GameManager.instance.SfxPlayer.PlaySfx(13);
+                        StartOrUpdatePathFinding();
+                    }
+                }
                 //Debug.Log(gameObject.name + " waiting for new job");
                 // get a new job
-                int taskId = GameManager.instance.Tasks.GetAvailableTask(this);
-                currentTaskID = taskId;
-                if(taskId > -1)Debug.Log(taskId);
-                if (taskId != -1)
-                {
-                    //Debug.Log(gameObject.name + " got a new job with id: " + taskId.ToString());
-                    workTask = GameManager.instance.Tasks.TaskList[taskId];
-                    Status = WorkerStates.Working;
-                    isReadyToWork = false;
-                    GameManager.instance.SfxPlayer.PlaySfx(13);
-                    StartOrUpdatePathFinding();
-                }
             }
 
         }
@@ -211,4 +221,28 @@ public class WorkerAgent : MonoBehaviour
         //CheckForNeeds();
     }
 
+    bool CheckIfFloating()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 10))
+        {
+            if (Vector3.Distance(transform.position, hit.transform.position) > 1)
+            {
+                Status = WorkerStates.Moving;
+                StartCoroutine(MoveFloating(hit.transform.position + Vector3.up));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    IEnumerator MoveFloating(Vector3 pos)
+    {
+        while (Vector3.Distance(transform.position, pos) > 0)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, pos, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        Status = WorkerStates.Idle;
+    }
 }
