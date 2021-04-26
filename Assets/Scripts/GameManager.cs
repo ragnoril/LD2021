@@ -79,6 +79,8 @@ public class GameManager : MonoBehaviour
 
     public AStar PathFinder;
 
+    public int WorkerCost;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -89,7 +91,8 @@ public class GameManager : MonoBehaviour
         PathFinder.isNodeCostEnabled = false;
 
         BuildingList = new List<BuildingAgent>();
-        CreateWorkers();
+        Workers = new List<WorkerAgent>();
+        CreateWorkers(StartingWorkerCount, true);
 
         DayCycle.IsRunning = true;
 
@@ -146,13 +149,13 @@ public class GameManager : MonoBehaviour
                 if (taskId == -1)
                 {
                     Debug.Log("new dig task added.");
-                    GameManager.instance.SfxPlayer.PlaySfx(Random.Range(7,9));
+                    SfxPlayer.PlaySfx(Random.Range(7,9));
                     Tasks.AddNewTask(SelectedTile.X, SelectedTile.Y, 0, SelectedTile);
                 }
                 else
                 {
                     Tasks.RemoveTask(taskId);
-                    GameManager.instance.SfxPlayer.PlaySfx(9);
+                    SfxPlayer.PlaySfx(9);
                 }
             }
         }
@@ -217,18 +220,25 @@ public class GameManager : MonoBehaviour
     }
 
 
-    void CreateWorkers()
+    public void CreateWorkers(int NoOfWorker, bool isStart=false)
     {
-        Workers = new List<WorkerAgent>();
-        for (int i = 0; i < StartingWorkerCount; i++)
+        if (isStart || OreAmount >= WorkerCost* NoOfWorker)
         {
-            GameObject go = GameObject.Instantiate(WorkerPrefabs[Random.Range(0, WorkerPrefabs.Length)], new Vector3(3f+i, 0f, 0), Quaternion.identity);
-            go.transform.SetParent(this.transform);
+            for (int i = 0; i < NoOfWorker; i++)
+            {
+                GameObject go = GameObject.Instantiate(WorkerPrefabs[Random.Range(0, WorkerPrefabs.Length)], new Vector3(3f + i, 0f, 0), Quaternion.identity);
+                go.transform.SetParent(this.transform);
 
-            go.name = "Worker_" + i.ToString();
-            WorkerAgent worker = go.GetComponent<WorkerAgent>();
-            Workers.Add(worker);
+                go.name = "Worker_" + i.ToString();
+                WorkerAgent worker = go.GetComponent<WorkerAgent>();
+                Workers.Add(worker);
 
+            }
+            if (!isStart)
+            {
+                OreAmount -= WorkerCost * NoOfWorker;
+                UI.UpdateStatsUI();
+            }
         }
     }
 

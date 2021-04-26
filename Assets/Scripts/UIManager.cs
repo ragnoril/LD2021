@@ -78,4 +78,9 @@ public class UIManager : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     }
 
+    public void AddDwarf()
+    {
+        GameManager.instance.CreateWorkers(1);
+    }
+
 }

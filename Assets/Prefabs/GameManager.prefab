@@ -69,3 +69,4 @@ MonoBehaviour:
   BuildingPlacementPosition: {x: 0, y: 0}
   BuildingList: []
   OreAmount: 100
+  WorkerCost: 50

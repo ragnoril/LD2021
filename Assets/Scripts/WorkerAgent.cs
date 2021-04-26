@@ -196,6 +196,7 @@ public class WorkerAgent : MonoBehaviour
     {
         GameManager.instance.Workers.Remove(this);
         GameManager.instance.UI.UpdateStatsUI();
+        GameManager.instance.SfxPlayer.PlaySfx(UnityEngine.Random.Range(10, 13));
         Destroy(gameObject);
     }
 
